@@ -52,10 +52,10 @@ class Tova
         $reader = file_get_contents( $file );
 
         $render = preg_replace_callback( "#{{(.*)}}#isU", "self::find", $reader );
+        $render = preg_replace_callback( "#{% (.*) (.*) %}#isU", "self::tag", $render );
         $render = $this->PHP_tag_parse( $render );
         $render = $this->If_tag_parse( $render );
         $render = $this->For_tag_parse( $render );
-        $render = preg_replace_callback( "#{% (.*) (.*) %}#isU", "self::tag", $render );
 
         if( $this->template_caching ):
             try {
@@ -97,9 +97,6 @@ class Tova
                 if( file_exists( $this->include_dir . $tag[2] ) ):
                     $reader = file_get_contents( $this->include_dir . $tag[2] );
                     $render = preg_replace_callback( "#{{(.*)}}#isU", "self::find", $reader );
-                    $render = $this->PHP_tag_parse( $render );
-                    $render = $this->If_tag_parse( $render );
-                    $render = $this->For_tag_parse( $render );
                 endif;
             break;
             case 'include_file':
@@ -114,8 +111,8 @@ class Tova
     }
 
     private function PHP_tag_parse( $code ){
-        $code = str_replace('[php]', '<?php', $code);
-        $code = str_replace('[/php]', '?>', $code);
+        $code = str_replace( ['[php]','[PHP]'], '<?php ', $code);
+        $code = str_replace( ['[/php]','[/PHP]'], ' ?>', $code);
         return $code;
     }
 

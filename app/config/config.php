@@ -1,9 +1,11 @@
 <?php
 return [
+        "project_name"             => "Mapper V4",
         "host"      => [
                       "app"        => "mv4",
                       "site"       => "http://" . $_SERVER['SERVER_NAME'] . ( $_SERVER['SERVER_PORT'] != "80" ? ":" . $_SERVER['SERVER_PORT'] : "" ) . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR,
-                      "assets"        => "http://" . $_SERVER['SERVER_NAME'] . ( $_SERVER['SERVER_PORT'] != "80" ? ":" . $_SERVER['SERVER_PORT'] : "" ) . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR,
+                      "assets"     => "http://" . $_SERVER['SERVER_NAME'] . ( $_SERVER['SERVER_PORT'] != "80" ? ":" . $_SERVER['SERVER_PORT'] : "" ) . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR,
+                      "sys_assets" => "http://" . $_SERVER['SERVER_NAME'] . ( $_SERVER['SERVER_PORT'] != "80" ? ":" . $_SERVER['SERVER_PORT'] : "" ) . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR . "dashboard/assets" . DIRECTORY_SEPARATOR,
                       "name"       => $_SERVER['SERVER_NAME'] . ( $_SERVER['SERVER_PORT'] != "80" ? ":" . $_SERVER['SERVER_PORT'] : "" ),
                       "uri"        => $_SERVER['REQUEST_URI']
         ],
@@ -20,9 +22,9 @@ return [
                       "template"    => realpath(dirname( __FILE__ ) ) . '/../../app/cache/template/',
                       "assets"      => realpath(dirname( __FILE__ ) ) . '/../../assets/',
                       "includes"    => realpath(dirname( __FILE__ ) ) . '/../../assets/includes/',
-                      "systeminc"   => realpath(dirname( __FILE__ ) ) . '/../../dashboard/includes/',
-                      "systeml"     => realpath(dirname( __FILE__ ) ) . '/../../app/view/system/layout/',
-                      "systemassets"=> realpath(dirname( __FILE__ ) ) . '/../../dashboard/system/assets/'
+                      "sys_inc"     => realpath(dirname( __FILE__ ) ) . '/../../dashboard/includes/',
+                      "sys_layout"  => realpath(dirname( __FILE__ ) ) . '/../../app/view/system/layout/',
+                      "sys_assets"  => realpath(dirname( __FILE__ ) ) . '/../../dashboard/system/assets/'
         ],
         "database"  => [
                       "host"        => "localhost",
