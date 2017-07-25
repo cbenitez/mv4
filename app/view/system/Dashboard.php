@@ -5,7 +5,6 @@
 class Dashboard
 {
     var $layout = "dashboard.html";
-    var $obj;
 
     function __construct(){
         $t = new Tova;
