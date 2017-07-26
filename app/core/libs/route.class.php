@@ -23,14 +23,14 @@ class Route{
         $uriRequestParam = isset( $_REQUEST['uri'] ) ? '/' . $_REQUEST['uri'] : '/';
 
         foreach( $this->_uri as $key => $value ):
-            if( preg_match("#^$value$#",$uriRequestParam) ):
+            //if( preg_match("#^$value$#",$uriRequestParam) ):
                 if( is_string($this->_method[$key]) ):
                     $useMethod = $this->_method[$key];
                     new $useMethod();
                 else:
                     call_user_func($this->_method[$key]);
                 endif;
-            endif;
+            //endif;
         endforeach;
     }
 }

@@ -6,29 +6,26 @@ require_once __DIR__ . '/config/app.php';
 /**
  * Carga de Clases
  */
-require_once config()['route']['classes']   .   'route.class.php';
-require_once config()['route']['classes']   .   'minify.class.php';
-require_once config()['route']['classes']   .   'logger.class.php';
-require_once config()['route']['classes']   .   'folder.class.php';
-require_once config()['route']['classes']   .   'encryption.class.php';
-require_once config()['route']['classes']   .   'tova.class.php';
+function __autoload($class) {
+    require config()['route']['libs'] . strtolower( $class ) . '.class.php';
+}
 /**
  * Librerias
  */
-Folder::Load    ( config()['route']['lib'] );
+Folder::Load    ( config()['route']['util'] );
 /**
  * Modelos
  */
-Folder::Load    ( config()['route']['model'] );
+Folder::Load    ( config()['route']['models'] );
 /**
  * Controladores
  */
-Folder::Load    ( config()['route']['controller'] );
+Folder::Load    ( config()['route']['controllers'] );
 /**
  * Vistas publicas
  */
-Folder::Load    ( config()['route']['view'] . 'public/' );
+Folder::Load    ( config()['route']['views'] . 'public/' );
 /**
  * Vistas del dashboard
  */
-Folder::Load    ( config()['route']['view'] . 'system/' );
+Folder::Load    ( config()['route']['views'] . 'system/' );

@@ -5,7 +5,7 @@ class Tova
 
     var $resource;
     
-    var $layout_dir =__DIR__ . DIRECTORY_SEPARATOR . 'layout' . DIRECTORY_SEPARATOR;
+    var $layout_dir =__DIR__ . DIRECTORY_SEPARATOR . '../../views/public/layout' . DIRECTORY_SEPARATOR;
 
     var $cache_file_ext = ".tmp";
 
@@ -13,11 +13,11 @@ class Tova
 
     var $template_cache_file = false;
 
-    var $template_cache_dir = __DIR__ . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR;
+    var $template_cache_dir = __DIR__ . DIRECTORY_SEPARATOR . '../../cache/template' . DIRECTORY_SEPARATOR;
 
     var $template_cache_ttl = 300; // secs
 
-    var $include_dir = "";
+    var $include_dir = __DIR__ . DIRECTORY_SEPARATOR . '../../../../assets/includes' . DIRECTORY_SEPARATOR;
 
     var $params = [];
 
