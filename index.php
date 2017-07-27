@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/app/autoload.php';
+
 ob_start("sanitize_output");
 set_x_frame_deny();
 set_xss_protection();

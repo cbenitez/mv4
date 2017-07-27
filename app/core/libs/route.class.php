@@ -18,8 +18,7 @@ class Route{
         endif;
     }
 
-    public function submit(){
-
+    public function submit(){        
         $uriRequestParam = isset( $_REQUEST['uri'] ) ? '/' . $_REQUEST['uri'] : '/';
 
         foreach( $this->_uri as $key => $value ):

@@ -17,14 +17,12 @@ class Tova
 
     var $template_cache_ttl = 300; // secs
 
-    var $include_dir = __DIR__ . DIRECTORY_SEPARATOR . '../../../../assets/includes' . DIRECTORY_SEPARATOR;
+    var $include_dir = __DIR__ . DIRECTORY_SEPARATOR . '../../../assets/includes' . DIRECTORY_SEPARATOR;
 
     var $params = [];
 
     function __construct(){
-        $this->layout_dir           = config()['route']['layout'];
-        $this->include_dir          = config()['route']['includes'];
-        $this->template_cache_dir   = config()['route']['template'];
+        
     }
 
     public function template( $resource ){
@@ -42,7 +40,7 @@ class Tova
         return;        
     }
 
-    public function render( $return = false ){
+    public function render( $return = false ){        
         $file = $this->layout_dir . $this->resource;
         
         if( !file_exists( $file ) ):

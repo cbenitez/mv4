@@ -2,9 +2,9 @@
 /**
  * Controlador del template del Inicio
  */
-class Dashboard extends Tova
+class Login extends Tova
 {
-    private $layout = "dashboard.html";
+    private $layout = "login.html";
 
     function __construct(){
 
@@ -12,16 +12,14 @@ class Dashboard extends Tova
         $this->include_dir          = config()['route']['sys_inc'];
         $this->template( $this->layout );
 
-        $title_site     = 'Dashboard';
         $project_name   = config()['project_name'];
+        $title_site     = 'Login';
         $assets         = config()['host']['sys_assets'];
-        $section_title  = 'Section title';
 
         $this->assign([
             'project_name'  => $project_name,
             'title_site'    => $title_site,
-            'assets'        => $assets,
-            'section_title' => $section_title
+            'assets'        => $assets
         ]);
 
         $this->render();

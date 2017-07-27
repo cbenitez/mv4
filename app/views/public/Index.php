@@ -4,10 +4,10 @@
  */
 class Index extends Tova
 {
-    var $layout = "index.php";
+    private $layout = "index.php";
 
-    function __construct(){
-        parent::__construct();
+    function __construct(){    
+
         $this->template( $this->layout );
 
         $title_site     = 'Mapper';
