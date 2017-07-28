@@ -28,9 +28,9 @@ return [
         "database"  => [
                       "type"        => "mysql",
                       "host"        => "localhost",
-                      "name"        => "testdb",
+                      "name"        => "datos",
                       "user"        => "root",
-                      "pass"        => "password"
+                      "pass"        => "123456"
         ],
         "cache"     => [
                       "log"         =>  "On",
