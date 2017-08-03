@@ -34,7 +34,7 @@ class Model extends Database {
         return json_encode( $result, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE );
     }
 
-    public function action_list( ){
+    public function action_select( ){
         $list = $this->select( "SELECT {$this->fields} FROM {$this->table}" );
         return json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE );
     }
