@@ -65,6 +65,10 @@
             <div class="col-md-6 col-sm-12">
                 <h1>Mapper</h1>
                 <p>Clase para procesamiento de pagos a través de bancard</p>
+                <form action="" method="post">
+                    <div class="form-group"><label for="testInput">Nombre</label><input type="text" name="testInput" id="testInput" class="form-control "  placeholder="El nombre aqui" required        ><div class="help-block with-errors"></div></div><div class="form-group"><label for="testInput">Apellido</label><input type="text" name="testInput" id="testInput" class="form-control "  placeholder="El apellido aqui" required        ><div class="help-block with-errors"></div></div><div class="form-group"><label for="testInput">Apellido</label><input type="text" name="testInput" id="testInput" class="form-control "  placeholder="El apellido aqui" required        ><div class="help-block with-errors"></div></div><div class="form-group"><label for="testInput">Texto</label><textarea class="form-control " name="testInput" id="testInput" required  placeholder="El texto aqui"    rows="7" ></textarea><div class="help-block with-errors"></div></div><div class="form-group"><label for="testInput"></label><input type="file" name="testInput" id="testInput"  required  ><p class="help-block">La ayuda aqui.</p></div>
+                    <button>Enviar</button>
+                </form>
             </div>
         </div>
         <!-- /.row -->
