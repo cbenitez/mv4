@@ -23,8 +23,8 @@ class Controller extends Model{
 
     }
 
-    private function get_fields(){
-
+    private function table_fields(){
+        
     }
 
 }

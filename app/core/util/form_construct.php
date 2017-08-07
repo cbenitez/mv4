@@ -5,7 +5,6 @@ function input( $params ){
 
     if( count( $params ) > 0 && is_array( $params ) ):
 
-
         switch( $params['type'] ):
             case 'password': 
                 $type = "password";

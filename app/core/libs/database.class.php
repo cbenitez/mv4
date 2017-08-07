@@ -2,15 +2,20 @@
 
 class Database extends PDO
 {
+    protected $DB_TYPE;
+    var $DB_HOST; 
+    var $DB_NAME; 
+    var $DB_USER; 
+    var $DB_PASS; 
     
     public function __construct()
     {
-        $DB_TYPE = config()['database']['type'];
-        $DB_HOST = config()['database']['host']; 
-        $DB_NAME = config()['database']['name']; 
-        $DB_USER = config()['database']['user']; 
-        $DB_PASS = config()['database']['pass']; 
-        parent::__construct($DB_TYPE.':host='.$DB_HOST.';dbname='.$DB_NAME, $DB_USER, $DB_PASS);
+        $this->DB_TYPE = config()['database']['type'];
+        $this->DB_HOST = config()['database']['host']; 
+        $this->DB_NAME = config()['database']['name']; 
+        $this->DB_USER = config()['database']['user']; 
+        $this->DB_PASS = config()['database']['pass']; 
+        parent::__construct($this->DB_TYPE.':host='.$this->DB_HOST.';dbname='.$this->DB_NAME, $this->DB_USER, $this->DB_PASS);
         
         //parent::setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTIONS);
     }
@@ -22,8 +27,7 @@ class Database extends PDO
      * @param constant $fetchMode A PDO Fetch mode
      * @return mixed
      */
-    public function select($sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC)
-    {
+    public function select( $sql, $array = array(), $fetchMode = PDO::FETCH_ASSOC ){
         $sth = $this->prepare($sql);
         foreach ($array as $key => $value) {
             $sth->bindValue("$key", $value);
@@ -38,8 +42,7 @@ class Database extends PDO
      * @param string $table A name of table to insert into
      * @param string $data An associative array
      */
-    public function insert($table, $data)
-    {
+    public function insert( $table, $data ){
         ksort($data);
         
         $fieldNames = implode('`, `', array_keys($data));
@@ -61,8 +64,7 @@ class Database extends PDO
      * @param string $data An associative array
      * @param string $where the WHERE query part
      */
-    public function update($table, $data, $where)
-    {
+    public function update( $table, $data, $where ){
         ksort($data);
         
         $fieldDetails = NULL;
@@ -88,8 +90,7 @@ class Database extends PDO
      * @param integer $limit
      * @return integer Affected Rows
      */
-    public function delete($table, $where, $limit = 1)
-    {
+    public function delete( $table, $where, $limit = 1 ){
         return $this->exec("DELETE FROM $table WHERE $where LIMIT $limit");
     }
     

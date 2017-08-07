@@ -38,4 +38,19 @@ class Model extends Database {
         $list = $this->select( "SELECT {$this->fields} FROM {$this->table}" );
         return json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE );
     }
+
+    public function action_fields( ){
+        $columns = $this->get_fields( $this->table );
+        if( count( $columns ) > 0 && is_array( $list_fields ) ):
+            foreach ($columns as $column):
+                if(strlen($column['COLUMN_COMMENT']) > 0):
+                    $column_config = @json_decode( utf8_encode( $column['COLUMN_COMMENT'] ) );
+                    if($column_config instanceof stdClass):
+                        
+                    endif;
+                endif;
+            endforeach;
+        endif;
+        return json_encode( $list_fields, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE );
+    }
 }

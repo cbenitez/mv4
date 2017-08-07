@@ -2,16 +2,5 @@
 <?php
 require_once __DIR__ . '/app/autoload.php';
 
-$model = new Model;
-$model->table = "personas";
-$model->primary_key = "persona_id";
-
-$data = '{"persona_nombre":"Christian Benitez","persona_fechanacimiento":"24-12-1983","persona_cedula":"654321","persona_sexo":"M","persona_localidad":"San Lorenzo","persona_departamento":"Central","persona_pais":"PY","persona_status":"1","persona_timestamp":"2017-05-05 10:10:10"}';
-
-$data1 = '{"persona_id":1,"persona_nombre":"Christian Benitez","persona_fechanacimiento":"24-12-1983","persona_cedula":"654321","persona_sexo":"M","persona_localidad":"San Lorenzo","persona_departamento":"Central","persona_pais":"PY","persona_status":"1","persona_timestamp":"2017-05-05 10:10:10"}';
-//print $model->action_create( $data );
-//$model->action_update( $data1 );
-$r = $model->action_list();
-pr( json_decode( $r, true ) );
-//$data2 = '{"persona_id":6}';
-//print $model->action_delete( $data2 );
+$m = new Mapper;
+$m->init();
