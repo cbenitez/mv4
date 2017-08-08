@@ -17,18 +17,18 @@ class Mapper extends Database{
                 "admin_login_attempts"
             ];
 			foreach($tables as $table):
-				if(!in_array($table['TABLE_NAME'], $override_tables)):
-					if(strlen($table['TABLE_COMMENT']) > 0):
-						$table_config[ $table['TABLE_NAME'] ][ 'table_config' ] = json_decode( $table['TABLE_COMMENT'], true );
+				if( !in_array( $table['TABLE_NAME'], $override_tables ) ):
+					if( strlen( $table['TABLE_COMMENT']) > 0 ):
+						$table_config[ $table['TABLE_NAME'] ][ 'table_config' ] = json_decode( utf8_encode( $table['TABLE_COMMENT'] ), true );
 					endif;
                     $sql = "SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $this->DB_NAME . "' AND TABLE_NAME = '" . $table['TABLE_NAME'] ."'";
                     $columns = $sth = $this->select($sql);        
                     foreach ($columns as $column):
-                        if(strlen($column['COLUMN_COMMENT']) > 0):
-                            if( $column['COLUMN_KEY'] == "PRI" ):
-                                $table_config[ $table['TABLE_NAME'] ][ 'table_config' ][ 'primary_key' ] = $column['COLUMN_NAME'];
-                            endif;
-                            $table_config[ $table['TABLE_NAME'] ][ 'fields' ][ $column['COLUMN_NAME'] ] = json_decode( $column['COLUMN_COMMENT'], true );
+                        if( $column['COLUMN_KEY'] == "PRI" ):
+                            $table_config[ $table['TABLE_NAME'] ][ 'table_config' ][ 'primary_key' ] = $column['COLUMN_NAME'];
+                        endif;
+                        if( strlen( $column['COLUMN_COMMENT'] ) > 0 ):
+                            $table_config[ $table['TABLE_NAME'] ][ 'fields' ][ $column['COLUMN_NAME'] ] = json_decode( utf8_encode( $column['COLUMN_COMMENT'] ), true );
                         endif;
                     endforeach;
 				endif;
@@ -39,19 +39,19 @@ class Mapper extends Database{
             @mkdir( $this->dir_config,0777 );
         endif;
 
-        $this->create_file( $this->dir_config . "/config.json", json_encode( $table_config ) );
+        $this->create_file( $this->dir_config . "/config.json", json_encode( $table_config, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE ) );
 
         pr($table_config);
     }
 
-    private function create_file($filepath,$content){
-    	if(!file_exists($filepath)):
+    private function create_file( $filepath, $content ){
+    	//if( !file_exists($filepath) ):
 			$handle = fopen($filepath , 'a');
 			fwrite($handle, $content);
 			fclose($handle);
 			return true;
-		else:
-			return false;
-		endif;
+		//else:
+		//	return false;
+		//endif;
     }
 }
