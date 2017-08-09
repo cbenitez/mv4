@@ -24,7 +24,7 @@ class Controller extends Model{
     }
 
     private function table_fields(){
-        
+        return include( config()['route']['tables'] . slugit( $this->table ) . '.json' );
     }
 
 }

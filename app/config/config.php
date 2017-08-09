@@ -12,6 +12,7 @@ return [
         "route"     => [
                       "root"        => realpath(dirname( __FILE__ ) ) . '/../..',
                       "app"         => realpath(dirname( __FILE__ ) ) . '/../../app/',
+                      "tables"      => realpath(dirname( __FILE__ ) ) . '/../../app/config/tables/',
                       "libs"        => realpath(dirname( __FILE__ ) ) . '/../../app/core/libs/',
                       "util"        => realpath(dirname( __FILE__ ) ) . '/../../app/core/util/',
                       "log"         => realpath(dirname( __FILE__ ) ) . '/../../app/core/log/',
@@ -28,7 +29,7 @@ return [
         "database"  => [
                       "type"        => "mysql",
                       "host"        => "localhost",
-                      "name"        => "formulario",
+                      "name"        => "datos",
                       "user"        => "root",
                       "pass"        => "123456"
         ],

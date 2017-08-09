@@ -1,0 +1,7 @@
+{
+    "admins_groups": {
+        "table_config": {
+            "primary_key": "group_id"
+        }
+    }
+}
