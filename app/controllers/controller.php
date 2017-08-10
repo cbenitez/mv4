@@ -20,11 +20,55 @@ class Controller extends Model{
     }
 
     public function form_construct(){
-
+        $form = '';
+        $this->list_fields = $this->table_fields();
+        $arr = json_decode( $this->list_fields, true );
+        if( is_array( $arr[ $this->table ][ 'fields' ] ) ):
+            foreach( $arr[ $this->table ][ 'fields' ] as $fields => $field ):
+                switch( $field[ 'type' ] ):
+                    case 'password':
+                    case 'datetime':
+                    case 'datetime-local':
+                    case 'date': 
+                    case 'month':
+                    case 'time': 
+                    case 'week': 
+                    case 'number':
+                    case 'email': 
+                    case 'url': 
+                    case 'search':
+                    case 'tel': 
+                    case 'color':
+                    case 'text': 
+                        $form .= input( $field );
+                    break;
+                    case 'textarea':
+                        $form .= textarea( $field );
+                    break;
+                    case 'select':
+                        $form .= select( $field );
+                    break;
+                    case 'upload':
+                        $form .= upload( $field );
+                    break;
+                    case 'checkbox':
+                        $form .= checkbox( $field );
+                    break;
+                    case 'radio':
+                        $form .= radio( $field );
+                    break;
+                endswitch;
+            endforeach;
+        endif;
+        return $form;
     }
 
     private function table_fields(){
-        return include( config()['route']['tables'] . slugit( $this->table ) . '.json' );
+        $json = false;
+        if( file_exists( config()['route']['tables'] . slugit( $this->table ) . '.json' ) ):
+            $json = file_get_contents( config()['route']['tables'] . slugit( $this->table ) . '.json' );
+        endif;
+        return $json;
     }
 
 }

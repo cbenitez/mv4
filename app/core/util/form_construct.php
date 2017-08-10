@@ -1,7 +1,9 @@
 <?php
 function input( $params ){
     
-    $params = @json_decode( $params, true );
+    if( !is_array( $params ) ):
+        $params = @json_decode( $params, true );
+    endif;
 
     if( count( $params ) > 0 && is_array( $params ) ):
 
@@ -122,7 +124,9 @@ function input( $params ){
 
 function textarea( $params ){
 
-    $params = @json_decode( $params, true );
+    if( !is_array( $params ) ):
+        $params = @json_decode( $params, true );
+    endif;
 
     if( count( $params ) > 0 && is_array( $params ) ):
 
@@ -190,7 +194,9 @@ function textarea( $params ){
 
 function select( $params ){
 
-    $params = @json_decode( $params, true );
+    if( !is_array( $params ) ):
+        $params = @json_decode( $params, true );
+    endif;
 
     if( count( $params ) > 0 && is_array( $params ) ):
 
@@ -230,7 +236,7 @@ function select( $params ){
     '<div class="form-group">' .
         '<label for="'.$name.'">'.$label.'</label>' . 
         '<select class="form-control ' . $class . '" name="' . $name . '" id="' . $name . '" ' . $required . ' ' . $disabled . '>' .
-            '<option value="">Seleccionar/option>' .
+            '<option value="">Seleccionar</option>' .
             $options .
         '</select>' .
         '<div class="help-block with-errors"></div>' . 
@@ -241,7 +247,9 @@ function select( $params ){
 
 function checkbox( $params ){
 
-    $params = @json_decode( $params, true );
+    if( !is_array( $params ) ):
+        $params = @json_decode( $params, true );
+    endif;
 
     if( count( $params ) > 0 && is_array( $params ) ):
 
@@ -282,7 +290,9 @@ function checkbox( $params ){
 
 function radio( $params ){
     
-    $params = @json_decode( $params, true );
+    if( !is_array( $params ) ):
+        $params = @json_decode( $params, true );
+    endif;
 
     if( count( $params ) > 0 && is_array( $params ) ):
 
@@ -323,7 +333,9 @@ function radio( $params ){
 
 function upload( $params ){
 
-    $params = @json_decode( $params, true );
+    if( !is_array( $params ) ):
+        $params = @json_decode( $params, true );
+    endif;
 
     if( count( $params ) > 0 && is_array( $params ) ):
 

@@ -29,7 +29,7 @@ return [
         "database"  => [
                       "type"        => "mysql",
                       "host"        => "localhost",
-                      "name"        => "datos",
+                      "name"        => "formulario",
                       "user"        => "root",
                       "pass"        => "123456"
         ],

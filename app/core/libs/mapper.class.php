@@ -34,7 +34,7 @@ class Mapper extends Database{
                             $table_config[ $table['TABLE_NAME'] ][ 'fields' ][ $column['COLUMN_NAME'] ] = json_decode( utf8_encode( $column['COLUMN_COMMENT'] ), true );
                         endif;
                     endforeach;
-                    $this->generate_config_file( $this->dir_config . "/" . slugit( $table['TABLE_NAME'] ) . ".json", json_encode( $table_config, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE |  JSON_PRETTY_PRINT ) );
+                    $this->generate_config_file( $this->dir_config . "/" . slugit( $table['TABLE_NAME'] ) . ".json", json_encode( $table_config, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE ) );
                     unset( $table_config );
 				endif;
 			endforeach;

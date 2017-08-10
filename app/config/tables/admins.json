@@ -1,7 +1,1 @@
-{
-    "admins": {
-        "table_config": {
-            "primary_key": "admin_id"
-        }
-    }
-}
+{"admins":{"table_config":{"primary_key":"admin_id"}}}
