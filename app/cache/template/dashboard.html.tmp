@@ -30,6 +30,8 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+<script src="https://use.fontawesome.com/a99981b0af.js"></script>
 </head>
 
 <body>
@@ -60,16 +62,15 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
     <ul class="nav nav-sidebar">
-        <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Reports</a></li>
-        <li><a href="#">Analytics</a></li>
-        <li><a href="#">Export</a></li>
+        <?php $menu_config = $this->params[ 'menu_config' ]; foreach( $menu_config as $menu ){ ?>
+        <li><a href="javascript:;" class="goto" data-module="<?php echo $menu['name']; ?>"><i class="fa fa-<?php echo $menu['icon']; ?>" aria-hidden="true"></i> <?php echo $menu['name']; ?></a></li>
+        <?php } ?>
     </ul>
 </div>
 
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="load_content">
                 <h1 class="page-header">Dashboard</h1>
-                <h2 class="sub-header">Section title</h2>
+                <h2 class="sub-header"></h2>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>

@@ -1,0 +1,7 @@
+[{"icon":"user","name":"Personas"},{
+        "icon": "users",
+        "name": "Administradores"
+    },{
+        "icon": "user-circle",
+        "name": "Grupos"
+    }]

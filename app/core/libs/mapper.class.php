@@ -23,6 +23,7 @@ class Mapper extends Database{
 				if( !in_array( $table['TABLE_NAME'], $override_tables ) ):
 					if( strlen( $table['TABLE_COMMENT']) > 0 ):
 						$table_config[ $table['TABLE_NAME'] ][ 'table_config' ] = json_decode( utf8_encode( $table['TABLE_COMMENT'] ), true );
+						$menu_config[] = json_decode( utf8_encode( $table['TABLE_COMMENT'] ), true );
 					endif;
                     $sql = "SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $this->DB_NAME . "' AND TABLE_NAME = '" . $table['TABLE_NAME'] ."'";
                     $columns = $sth = $this->select($sql);        
@@ -34,8 +35,9 @@ class Mapper extends Database{
                             $table_config[ $table['TABLE_NAME'] ][ 'fields' ][ $column['COLUMN_NAME'] ] = json_decode( utf8_encode( $column['COLUMN_COMMENT'] ), true );
                         endif;
                     endforeach;
+                    $this->generate_config_file( $this->dir_config . "/menu_config.json", json_encode( $menu_config, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE ) );
                     $this->generate_config_file( $this->dir_config . "/" . slugit( $table['TABLE_NAME'] ) . ".json", json_encode( $table_config, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE ) );
-                    unset( $table_config );
+                    unset( $table_config, $menu_config );
 				endif;
 			endforeach;
         endif;
