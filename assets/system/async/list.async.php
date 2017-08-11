@@ -31,9 +31,9 @@ switch( $task ):
             endforeach;
             $table .= '</tbody>';
             $table .= '</table>';
-            $json = [ 'status' => 200, 'list' => $table, 'cols' => $list ];
+            $json = [ 'status' => 200, 'list' => $table ];
         else:
-            $json = [ 'status' => 404, 'message' => 'Datos no encontrados.', 'type' => 'primary' ];
+            $json = [ 'status' => 404, 'message' => 'Datos no encontrados.', 'type' => 'warning' ];
         endif;
     break;
     default:
