@@ -49,19 +49,15 @@ class Tova
 
         $reader = file_get_contents( $file );
 
-        $render = preg_replace_callback( "#{{(.*)}}#isU", "self::find", $reader );
-        $render = preg_replace_callback( "#{% (.*) (.*) %}#isU", "self::tag", $render );
-        $render = $this->PHP_tag_parse( $render );
-        $render = $this->If_tag_parse( $render );
-        $render = $this->For_tag_parse( $render );
-
         if( $this->template_caching ):
             try {
                 $get_template = $this->get_template();
                 if( $get_template ):
+                    $get_template = $this->render_reader( $get_template );
                     $content = @eval('?>'.$get_template.'<?php ?>');
                 else:
-                    $this->set_template( $render );
+                    $this->set_template( $reader );
+                    $render = $this->render_reader( $reader );
                     $content = @eval('?>'.$render.'<?php ?>');
                 endif;
                 return $content;
@@ -69,6 +65,7 @@ class Tova
                 echo 'Excepción capturada: ',  $e->getMessage(), "\n";
             };
         else:
+            $render = $this->render_reader( $reader );
             if( $return ):
                 return $render;
             else:
@@ -166,5 +163,14 @@ class Tova
             Logger::log( "Cache miss for template " . $this->template_name );
             return false;
         endif;
+    }
+
+    private function render_reader( $reader ){
+        $render = preg_replace_callback( "#{{(.*)}}#isU", "self::find", $reader );
+        $render = preg_replace_callback( "#{% (.*) (.*) %}#isU", "self::tag", $render );
+        $render = $this->PHP_tag_parse( $render );
+        $render = $this->If_tag_parse( $render );
+        $render = $this->For_tag_parse( $render );
+        return $render;
     }
 }

@@ -1,5 +1,5 @@
 <?php
-class Controller extends Model{
+class Controller{
     
     protected $list_fields = '';
 
@@ -15,8 +15,11 @@ class Controller extends Model{
         
     }
 
-    public function list( $params ){
-
+    public function list( $params = null ){
+        $obj = new Model;
+        $obj->table = $this->table;
+        $result = $obj->action_select();
+        return $result;
     }
 
     public function form_construct(){
@@ -63,7 +66,7 @@ class Controller extends Model{
         return $form;
     }
 
-    private function table_fields(){
+    public function table_fields(){
         $json = false;
         if( file_exists( config()['route']['tables'] . slugit( $this->table ) . '.json' ) ):
             $json = file_get_contents( config()['route']['tables'] . slugit( $this->table ) . '.json' );

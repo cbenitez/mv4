@@ -6,8 +6,10 @@ require_once __DIR__ . '/config/app.php';
 /**
  * Carga de Clases
  */
-function __autoload($class) {
-    require config()['route']['libs'] . strtolower( $class ) . '.class.php';
+function __autoload( $class ) {
+    $class = strtolower( $class );
+    $classFile = config()['route']['libs'] . $class . '.class.php';
+    if( is_file( $classFile ) && !class_exists( $class ) ) require_once $classFile;
 }
 /**
  * Librerias

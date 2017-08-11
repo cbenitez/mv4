@@ -1,0 +1,22 @@
+RewriteEngine On
+Options -Indexes -ExecCGI
+IndexOptions -FancyIndexing
+IndexIgnore *
+
+# denegar una petición en base al metodo de la petición
+RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK|OPTIONS|HEAD)$ [NC]
+RewriteRule ^.*$ - [F]
+
+RewriteCond $1 !\.[a-z0-9]+$ [NC]
+RewriteCond %{REQUEST_FILENAME}.async.php -f
+RewriteRule ^(.+)$ $1.async.php [L]
+
+<IfModule mod_deflate.c>
+    <filesMatch "\.(js|css|html|php)$">
+        SetOutputFilter DEFLATE
+    </filesMatch>
+</IfModule>
+
+php_value upload_max_filesize 64M
+php_value memory_limit 96M
+php_value post_max_size 64M

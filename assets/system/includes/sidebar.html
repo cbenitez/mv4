@@ -1,7 +1,7 @@
 <div class="col-sm-3 col-md-2 sidebar">
     <ul class="nav nav-sidebar">
         {for: menu in menu_config }
-        <li><a href="javascript:;" class="goto" data-module="{:menu.name}"><i class="fa fa-{:menu.icon}" aria-hidden="true"></i> {:menu.name}</a></li>
+        <li><a href="javascript:;" class="module" onclick="mapperJs.list('{:menu.name}')"><i class="fa fa-{:menu.icon}" aria-hidden="true"></i> {:menu.name}</a></li>
         {/for}
     </ul>
 </div>
