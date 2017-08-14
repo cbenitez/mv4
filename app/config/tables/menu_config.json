@@ -1,7 +1,4 @@
 [{"icon":"user","name":"Personas"},{
-        "icon": "users",
-        "name": "Administradores"
-    },{
-        "icon": "user-circle",
+        "icon": "group",
         "name": "Grupos"
     }]

@@ -34,8 +34,19 @@ class Model extends Database {
         return json_encode( $result, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE );
     }
 
-    public function action_select( ){
-        $list = $this->select( "SELECT {$this->fields} FROM {$this->table}" );
+    public function action_select( $params = "" ){
+        $conditions = "";
+        if( !empty( $params ) ):
+            if( isJSON( $params ) ):
+                $params = json_decode( $params, true );
+                if( is_array( $params ) ):
+                    foreach( $params as $n => $x ):
+                        $conditions .= "{$n} {$x}";
+                    endforeach;
+                endif;
+            endif;
+        endif;
+        $list = $this->select( "SELECT {$this->fields} FROM {$this->table} {$conditions}" );
         return json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE );
     }
 

@@ -15,10 +15,10 @@ class Controller{
         
     }
 
-    public function list( $params = null ){
+    public function list( $params = "" ){
         $obj = new Model;
         $obj->table = $this->table;
-        $result = $obj->action_select();
+        $result = $obj->action_select( $params );
         return $result;
     }
 

@@ -1,1 +1,74 @@
-{"personas":{"table_config":{"icon":"user","name":"Personas","primary_key":"persona_id"},"fields":{"persona_nombre":{"label":"Nombre y apellido","required":"true","type":"text","maxlenght":30,"placeholder":"Aqui el nombre"},"persona_fechanacimiento":{"label":"Fecha de nacimiento","required":"true","type":"date","maxlenght":10,"placeholder":"dd\/mm\/yyyy"},"persona_cedula":{"label":"Cedula","required":"true","type":"number","min":0,"maxlenght":6},"persona_sexo":{"label":"Sexo","required":"true","type":"radio","value":"hombre,mujer"},"persona_localidad":{"label":"Localidad","required":"true","type":"text","placeholder":"La direccion aqui"},"persona_departamento":{"label":"Departamento","required":"true","type":"text","placeholder":"El departamento aqui"},"persona_pais":{"label":"Pais","required":"true","type":"text","placeholder":"El pais aqui"},"persona_status":{"label":"Activo","type":"checkbox","value":1,"required":"false"},"persona_timestamp":null}}}
+{
+    "personas": {
+        "table_config": {
+            "icon": "user",
+            "name": "Personas",
+            "primary_key": "persona_id"
+        },
+        "fields": {
+            "persona_nombre": {
+                "label": "Nombre y apellido",
+                "required": "true",
+                "type": "text",
+                "maxlenght": 30,
+                "placeholder": "Aqui el nombre",
+                "list": true
+            },
+            "persona_fechanacimiento": {
+                "label": "Fecha de nacimiento",
+                "required": "true",
+                "type": "date",
+                "maxlenght": 10,
+                "placeholder": "dd/mm/yyyy",
+                "list": true
+            },
+            "persona_cedula": {
+                "label": "Cedula",
+                "required": "true",
+                "type": "number",
+                "min": 0,
+                "maxlenght": 6,
+                "list": true
+            },
+            "persona_sexo": {
+                "label": "Sexo",
+                "required": "true",
+                "type": "radio",
+                "value": "hombre,mujer",
+                "list": false
+            },
+            "persona_localidad": {
+                "label": "Localidad",
+                "required": "true",
+                "type": "text",
+                "placeholder": "La direccion aqui",
+                "list": false
+            },
+            "persona_departamento": {
+                "label": "Departamento",
+                "required": "true",
+                "type": "text",
+                "placeholder": "El departamento aqui",
+                "list": false
+            },
+            "persona_pais": {
+                "label": "Pais",
+                "required": "true",
+                "type": "text",
+                "placeholder": "El pais aqui",
+                "list": false
+            },
+            "persona_status": {
+                "label": "Activo",
+                "type": "checkbox",
+                "value": 1,
+                "required": "false",
+                "list": true
+            },
+            "persona_timestamp": {
+                "required": "false",
+                "list": true
+            }
+        }
+    }
+}

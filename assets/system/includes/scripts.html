@@ -6,6 +6,14 @@
 <script src="{{assets}}js/bootstrap.min.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
 <script src="{{assets}}js/vendor/holder.min.js"></script>
+<script src="{{assets}}js/vendor/jquery.blockUI.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{assets}}js/ie10-viewport-bug-workaround.js"></script>
 <script src="{{assets}}js/mapper_js.js"></script>
+<script>
+$.blockUI.defaults.message = '<img src="{{assets}}../images/wedges.svg">';
+$.blockUI.defaults.css.backgroundColor = "none";
+$.blockUI.defaults.css.border = "none";
+$.blockUI.defaults.overlayCSS.opacity = 0.1;
+$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+</script>

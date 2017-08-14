@@ -8,8 +8,8 @@ RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK|OPTIONS|HEAD)$ [NC]
 RewriteRule ^.*$ - [F]
 
 RewriteCond $1 !\.[a-z0-9]+$ [NC]
-RewriteCond %{REQUEST_FILENAME}.async.php -f
-RewriteRule ^(.+)$ $1.async.php [L]
+RewriteCond %{REQUEST_FILENAME}__async.php -f
+RewriteRule ^(.+)$ $1__async.php [L]
 
 <IfModule mod_deflate.c>
     <filesMatch "\.(js|css|html|php)$">
