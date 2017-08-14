@@ -1,5 +1,5 @@
 <?php
-require_once '../../../app/autoload.php';
+require_once '../../app/autoload.php';
 
 $task = param( 'task' );
 $module = strtolower( param( 'module' ) );

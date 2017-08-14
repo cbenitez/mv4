@@ -5,7 +5,7 @@ return [
                       "app"        => "mv4",
                       "site"       => "http://" . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR,
                       "assets"     => "http://" . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR,
-                      "sys_assets" => "http://" . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR . "assets/system/assets" . DIRECTORY_SEPARATOR,
+                      "sys_assets" => "http://" . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR . "system/assets" . DIRECTORY_SEPARATOR,
                       "name"       => $_SERVER['SERVER_NAME'],
                       "uri"        => $_SERVER['REQUEST_URI']
         ],
@@ -22,8 +22,8 @@ return [
                       "layout"      => realpath( dirname( __FILE__ ) ) . '/../../app/views/public/layout/',
                       "template"    => realpath( dirname( __FILE__ ) ) . '/../../app/cache/template/',
                       "assets"      => realpath( dirname( __FILE__ ) ) . '/../../assets/',
-                      "includes"    => realpath( dirname( __FILE__ ) ) . '/../../assets/includes/',
-                      "sys_inc"     => realpath( dirname( __FILE__ ) ) . '/../../assets/system/includes/',
+                      "includes"    => realpath( dirname( __FILE__ ) ) . '/../../includes/',
+                      "sys_inc"     => realpath( dirname( __FILE__ ) ) . '/../../system/includes/',
                       "sys_layout"  => realpath( dirname( __FILE__ ) ) . '/../../app/views/system/layout/'
         ],
         "database"  => [

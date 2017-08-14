@@ -1,5 +1,5 @@
 <?php
-require_once '../../../app/autoload.php';
+require_once '../../app/autoload.php';
 
 $pk = numParam( 'pk' );
 $module = strtolower( param( 'module' ) );

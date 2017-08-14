@@ -1,0 +1,4 @@
+RewriteEngine On
+DirectoryIndex index__cms.php
+
+RewriteRule ^captcha.jpg$ captcha_jpg.php
