@@ -1,7 +1,8 @@
 var mapperJs = {
     list: function( module ){
+        console.log(window.location.pathname);
         $.ajax({
-            url: window.location+'../system/async/list',
+            url: './system/async/list',
             data: 'module=' + module + '&task=list',
             type: 'POST',
             dataType: 'json',
@@ -25,7 +26,7 @@ var mapperJs = {
     },
     modal: function ( module, pk ) {
         $('#view_modal_content').empty();
-        $('#view_modal_content').load( window.location + '../system/async/modal?module=' + module + '&pk=' + pk );
+        $('#view_modal_content').load( './system/async/modal?module=' + module + '&pk=' + pk );
         $('#view_modal').modal( 'show' );
     }
 }
