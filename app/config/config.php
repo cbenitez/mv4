@@ -2,8 +2,8 @@
 return [
         "project_name"             => "Mapper V4",
         "host"      => [
-                      "app"        => "mv4",
-                      "site"       => "http://" . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR,
+                      "site"       => "http://" . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR,
+                      "app"        => "http://" . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR,
                       "assets"     => "http://" . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR . "assets" . DIRECTORY_SEPARATOR,
                       "sys_assets" => "http://" . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR . "mv4" . DIRECTORY_SEPARATOR . "system/assets" . DIRECTORY_SEPARATOR,
                       "name"       => $_SERVER['SERVER_NAME'],
