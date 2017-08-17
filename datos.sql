@@ -121,10 +121,10 @@ CREATE TABLE `personas` (
   `persona_nombre` varchar(150) DEFAULT NULL COMMENT '{"label":"Nombre y apellido","required":"true","type":"text","maxlenght":"30","placeholder":"Aqui el nombre","list":true}',
   `persona_fechanacimiento` varchar(60) DEFAULT NULL COMMENT '{"label":"Fecha de nacimiento","required":"true","type":"date","maxlenght":"10","placeholder":"dd/mm/yyyy","list":true}',
   `persona_cedula` int(11) DEFAULT '0' COMMENT '{"label":"Cedula","required":"true","type":"number","min":"0","maxlenght":"6","list":true}',
-  `persona_sexo` varchar(45) DEFAULT NULL COMMENT '{"label":"Sexo","required":"true","type":"radio","value":"hombre,mujer","list":false}',
+  `persona_sexo` varchar(45) DEFAULT NULL COMMENT '{"label":"Sexo","required":"true","type":"radio","label_options":"Hombre,Mujer","options":"hombre,mujer","list":false}',
   `persona_localidad` varchar(100) DEFAULT NULL COMMENT '{"label":"Localidad","required":"true","type":"text","placeholder":"La direccion aqui","list":false}',
   `persona_departamento` varchar(100) DEFAULT NULL COMMENT '{"label":"Departamento","required":"true","type":"text","placeholder":"El departamento aqui","list":false}',
-  `persona_pais` varchar(100) DEFAULT NULL COMMENT '{"label":"Pais","required":"true","type":"text","placeholder":"El pais aqui","list":false}',
+  `persona_pais` varchar(100) DEFAULT NULL COMMENT '{"label":"Pais","required":"true","type":"select","options":"argentina,bolivia,brasil,colombia,paraguay,uruguay","list":false}',
   `persona_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '{"label":"Activo","type":"checkbox","value":"1","required":"false","list":true}',
   `persona_hidden` tinyint(1) NOT NULL DEFAULT '0',
   `persona_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '{"required":"false","list":true}',
@@ -151,4 +151,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-14 17:04:19
+-- Dump completed on 2017-08-17 18:17:17

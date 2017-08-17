@@ -177,7 +177,7 @@ function textarea( $params ){
         endif;
 
         if( !empty( $params['value'] ) ):
-            $value = 'value="' . $params['value'] . '"';
+            $value = $params['value'];
         endif;
 
     endif;
@@ -229,7 +229,28 @@ function select( $params ){
         if( $params['disabled'] ):
             $disabled = 'disabled';
         endif;
+
+        if( $params['options'] ):
+            $options_arr = explode( ',', $params['options'] );
+            if( $params['label_options'] ):
+                $label_options_arr = explode( ',', $params['label_options'] );
+            endif;
+        endif;
     
+    endif;
+
+    if( is_array( $options_arr ) && count( $options_arr ) > 0 ):
+        $c = 0;
+        foreach( $options_arr as $value ):
+            if( is_array( $label_options_arr ) && count( $label_options_arr ) > 0 ):
+                $label_opt = ucfirst( $label_options_arr[ $c ] );
+            else:
+                $label_opt = ucfirst( $value );
+            endif;
+            $selected = ( $param['value'] == $value ) ? 'selected' : '';
+            $options .= '<option value="' . $value . '" ' . $selected . '>' . $label_opt . '</option>';
+        endforeach;
+        $selected = empty( $selected ) ? 'selected' : '';
     endif;
 
     $select =
@@ -245,14 +266,18 @@ function select( $params ){
     return $select;
 }
 
-function checkbox( $params ){
-
+function check_radio( $params ){
+    
     if( !is_array( $params ) ):
         $params = @json_decode( $params, true );
     endif;
 
     if( count( $params ) > 0 && is_array( $params ) ):
 
+        if( $params['type'] ):
+            $type = $params['type'];
+        endif;
+        
         if( $params['label'] ):
             $label = $params['label'];
         endif;
@@ -261,6 +286,10 @@ function checkbox( $params ){
             $name = $params['name'];
         else:
             $name = slugit( $label );
+        endif;
+
+        if( $params['value'] ):
+            $value = $params['value'];
         endif;
 
         if( $params['class'] ):
@@ -274,61 +303,51 @@ function checkbox( $params ){
         if( $params['disabled'] ):
             $disabled = 'disabled';
         endif;
-    
-    endif;
 
-    $checkbox = 
-    '<div class="checkbox">' .
-        '<label>' .
-            '<input type="checkbox" name="' . $name . '" id="' . $name . '" class="form-control ' . $class . '" ' . $required . ' ' . $disabled . ' ' . $value . '>' . $label .
-        '</label>' .
-        '<div class="help-block with-errors"></div>' .
-    '</div>';
-
-    return $checkbox;
-}
-
-function radio( $params ){
-    
-    if( !is_array( $params ) ):
-        $params = @json_decode( $params, true );
-    endif;
-
-    if( count( $params ) > 0 && is_array( $params ) ):
-
-        if( $params['label'] ):
-            $label = $params['label'];
-        endif;
-
-        if( $params['name'] ):
-            $name = $params['name'];
+        if( !$params['inline'] ):
+            $inline = $type . '-inline';
+        elseif( $params['inline'] == true ):
+            $inline = $type . '-inline';
         else:
-            $name = slugit( $label );
+            $inline = '';
+        endif;
+        
+        if( $params['options'] ):
+            $options_arr = explode( ',', $params['options'] );
+            if( $params['label_options'] ):
+                $label_options_arr = explode( ',', $params['label_options'] );
+            endif;
         endif;
 
-        if( $params['class'] ):
-            $class = $params['class'];
-        endif;
-
-        if( $params['required'] ):
-            $required = 'required';
-        endif;
-
-        if( $params['disabled'] ):
-            $disabled = 'disabled';
-        endif;
-    
     endif;
 
-    $radio = 
-    '<div class="radio">' .
-        '<label>' .
-            '<input type="radio" name="' . $name . '" id="' . $name . '" class="form-control ' . $class . '" ' . $required . ' ' . $disabled . ' ' . $value . '>' . $label .
-        '</label>' .
-        '<div class="help-block with-errors"></div>' .
-    '</div>';
+    if( is_array( $options_arr ) && count( $options_arr ) > 0 ):
+        $c = 0;
+        $check_radio = '<div class="' . $type . '">' .
+                '<strong for="'.$name.'">'.$label.'</strong> ';
+        foreach( $options_arr as $value ):
+            if( is_array( $label_options_arr ) && count( $label_options_arr ) > 0 ):
+                $label_opt = ucfirst( $label_options_arr[ $c ] );
+            else:
+                $label_opt = ucfirst( $value );
+            endif;
+            $check_radio .= '<label class="' . $inline . '">' .
+                        '<input type="' . $type . '" name="' . $name . '" id="' . $name . '" class="' . $class . '"  ' . $disabled . ' value="' . $value . '">' . $label_opt .
+                    '</label>';
+                    $c++;
+        endforeach;
+        $check_radio .= '</div>';
+    else:
+        $check_radio = 
+        '<div class="' . $type . '">' .
+            '<label>' .
+                '<input type="' . $type . '" name="' . $name . '" id="' . $name . '" class="' . $class . '" ' . $required . ' ' . $disabled . ' value="' . $value . '">' . $label .
+            '</label>' .
+            '<div class="help-block with-errors"></div>' .
+        '</div>';
+    endif;
 
-    return $radio;
+    return $check_radio;
 }
 
 function upload( $params ){

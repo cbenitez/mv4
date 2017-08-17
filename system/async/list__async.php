@@ -10,14 +10,14 @@ switch( $task ):
          * Miga de pan
          */
         $result = '<ol class="breadcrumb">';
-        $result .= '<li><a href="./">Dashboard</a></li>';
+        $result .= '<li><a href="' . config()['host']['app'] . 'dashboard">Dashboard</a></li>';
         $result .= '<li class="active">' . ucfirst( $module ) . '</li>';
         $result .= '</ol>';
 
         /*
          * Titulo del modulo
          */
-        $result .= '<h2>' . ucfirst( $module ) . '</h2>';
+        $result .= '<h1 class="page-header">' . ucfirst( $module ) . '</h1>';
 
         /*
          * Formulario de busqueda
@@ -38,7 +38,7 @@ switch( $task ):
          */
         $result .= '<div class="row">';
         $result .= ' <div class="col-md-2 col-md-offset-10 text-right">';
-        $result .= '     <button class="btn btn-success" type="button"><i class="fa fa-plus-circle"></i> Nuevo registro</button>';
+        $result .= '     <button class="btn btn-success" type="button" onclick="mapperJs.action(\''.$module.'\',\'form\',0);"><i class="fa fa-plus-circle"></i> Nuevo registro</button>';
         $result .= ' </div>';
         $result .= '</div>';
         
@@ -66,8 +66,9 @@ switch( $task ):
             $result .= '<tbody>';
             $list = json_decode( $controller->list(), true );
             foreach( $list as $col ):
+                $pk = $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ];
                 $result .= '<tr>';
-                $result .= '<td>' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . '</td>';
+                $result .= '<td>' . $pk . '</td>';
                 for( $i = 0; $i <= count( $cols ); $i++ ):
                     $suffix = end( explode( '_', $cols[ $i ] ) );
                     switch( $suffix ):
@@ -83,7 +84,7 @@ switch( $task ):
                 endfor;
                 $result .= '<td>
                     <a href="javascript:;" title="Abrir registro" class="btn btn-primary" onclick="mapperJs.modal(\''.$module.'\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i class="fa fa-folder-open" aria-hidden="true"></i></a>
-                    <a href="javascript:;" title="Editar registro" class="btn btn-primary" onclick="action(\'edit\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="javascript:;" title="Editar registro" class="btn btn-primary" onclick="mapperJs.action(\''.$module.'\',\'form\','.$pk.');"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     <a href="javascript:;" title="Eliminar registro" class="btn btn-danger" onclick="action(\'delete\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </td>';
                 $result .= '</tr>';

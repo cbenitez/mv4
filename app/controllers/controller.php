@@ -55,10 +55,10 @@ class Controller{
                         $form .= upload( $field );
                     break;
                     case 'checkbox':
-                        $form .= checkbox( $field );
+                        $form .= check_radio( $field );
                     break;
                     case 'radio':
-                        $form .= radio( $field );
+                        $form .= check_radio( $field );
                     break;
                 endswitch;
             endforeach;
