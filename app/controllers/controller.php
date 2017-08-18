@@ -22,7 +22,7 @@ class Controller{
         return $result;
     }
 
-    public function form_construct(){
+    public function form_construct( $values = null ){
         $form = '';
         $this->list_fields = $this->table_fields();
         $arr = json_decode( $this->list_fields, true );

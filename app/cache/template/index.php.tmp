@@ -21,9 +21,24 @@
         <!-- /.row -->
     </div>
     <!-- /.container -->
+    <form enctype="multipart/form-data" id="formuploadajax" method="post" onsubmit="subirImagen( );return false;">
+        <input type="file" name="file1" id="file-1">
+        <input type="file" name="file2" id="file-2">
+        <input type="file" name="file3" id="file-3">
+        <input type="file" name="file4" id="file-4">
+        <button type="submit">Enviar</button>
+    </form>
 
     {% include script.php %}
+    <script>    
+    
+    function subirImagen( ){
+        $.each( $('input[type=file]')[0].files, function(i, file) {
+            console.log( i + ' ' + file.name );
+        });
+    }
 
+    </script>
 </body>
 
 </html>
