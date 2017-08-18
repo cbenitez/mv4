@@ -22,12 +22,19 @@ class Controller{
         return $result;
     }
 
-    public function form_construct( $values = null ){
-        $form = '';
+    public function form_construct( $pk = 0 ){
         $this->list_fields = $this->table_fields();
+        $form = '';
         $arr = json_decode( $this->list_fields, true );
+        if( $pk > 0 ):
+            $list = json_decode( $this->list( '{"where":" ' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . $pk . '"}' ), true );  
+            $form .= '<input type="hidden" name="' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . '" value="'.$pk.'">';          
+        endif;
         if( is_array( $arr[ $this->table ][ 'fields' ] ) ):
             foreach( $arr[ $this->table ][ 'fields' ] as $fields => $field ):
+                if( is_array( $list ) ):
+                    $field['val'] = $list[0][ $fields ];
+                endif;
                 switch( $field[ 'type' ] ):
                     case 'password':
                     case 'datetime':

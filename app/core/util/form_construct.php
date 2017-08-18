@@ -109,6 +109,10 @@ function input( $params ){
         if( !empty( $params['value'] ) ):
             $value = 'value="' . $params['value'] . '"';
         endif;
+
+        if( !empty( $params['val'] ) ):
+            $value = 'value="' . $params['val'] . '"';
+        endif;
         
     endif;
 
@@ -178,6 +182,10 @@ function textarea( $params ){
 
         if( !empty( $params['value'] ) ):
             $value = $params['value'];
+        endif;
+
+        if( !empty( $params['val'] ) ):
+            $value = $params['val'];
         endif;
 
     endif;
@@ -292,6 +300,10 @@ function check_radio( $params ){
             $value = $params['value'];
         endif;
 
+        if( $params['val'] ):
+            $val = $params['val'];
+        endif;
+
         if( $params['class'] ):
             $class = $params['class'];
         endif;
@@ -331,17 +343,19 @@ function check_radio( $params ){
             else:
                 $label_opt = ucfirst( $value );
             endif;
+            $checked = $params['val'] == $value ? 'checked="checked"' : '';
             $check_radio .= '<label class="' . $inline . '">' .
-                        '<input type="' . $type . '" name="' . $name . '" id="' . $name . '" class="' . $class . '"  ' . $disabled . ' value="' . $value . '">' . $label_opt .
+                        '<input type="' . $type . '" name="' . $name . '" id="' . $name . '" class="' . $class . '" ' . $disabled . ' ' . $checked . ' value="' . $value . '">' . $label_opt .
                     '</label>';
                     $c++;
         endforeach;
         $check_radio .= '</div>';
     else:
+        $checked = $params['val'] == $value ? 'checked="checked"' : '';
         $check_radio = 
         '<div class="' . $type . '">' .
             '<label>' .
-                '<input type="' . $type . '" name="' . $name . '" id="' . $name . '" class="' . $class . '" ' . $required . ' ' . $disabled . ' value="' . $value . '">' . $label .
+                '<input type="' . $type . '" name="' . $name . '" id="' . $name . '" class="' . $class . '" ' . $required . ' ' . $disabled . ' ' . $checked . ' value="' . $value . '">' . $label .
             '</label>' .
             '<div class="help-block with-errors"></div>' .
         '</div>';

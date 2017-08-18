@@ -40,9 +40,11 @@ switch( $task ):
          * Formulario del modulo
          */
         $result .= '<form action="" method="post" enctype="multipart/form-data" onsubmit="mapperJs.save();">';
-        $result .=      $controller->form_construct();
-        $result .= '    <button class="btn btn-secundary" type="button" onclick="mapperJs.list(\'' . $module . '\')"><i class="fa fa-times"></i> Cancelar</button>';
+        $result .=      $controller->form_construct( $pk );
+        $result .= '<div class="well">';
+        $result .= '    <button class="btn btn-danger" type="button" onclick="mapperJs.list(\'' . $module . '\')"><i class="fa fa-times"></i> Cancelar</button>';
         $result .= '    <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> Guardar</button>';
+        $result .= '</div>';
         $result .= '</form>';
 
         $json = [ 'status' => 200, 'result' => $result ];
