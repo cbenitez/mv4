@@ -7,7 +7,6 @@ $module = strtolower( param( 'module' ) );
 $controller = new Controller( $module );
 if( $pk > 0 ):
     $subtit = "Modificar";
-    
 else:
     $subtit = "Nuevo";
 endif;
@@ -37,9 +36,17 @@ switch( $task ):
         $result .= '</div>';
 
         /*
+        * Mensaje
+        */
+        $result .= '<div class="row">';
+        $result .= ' <div class="col-md-12" id="message">';
+        $result .= ' </div>';
+        $result .= '</div>';
+
+        /*
          * Formulario del modulo
          */
-        $result .= '<form action="" method="post" enctype="multipart/form-data" onsubmit="mapperJs.save();">';
+        $result .= '<form action="" method="post" enctype="multipart/form-data" onsubmit="mapperJs.save(\'' . $module . '\');return false;">';
         $result .=      $controller->form_construct( $pk );
         $result .= '<div class="well">';
         $result .= '    <button class="btn btn-danger" type="button" onclick="mapperJs.list(\'' . $module . '\')"><i class="fa fa-times"></i> Cancelar</button>';

@@ -64,7 +64,7 @@ switch( $task ):
             $result .= '</tr>';
             $result .= '</thead>';
             $result .= '<tbody>';
-            $list = json_decode( $controller->list(), true );
+            $list = json_decode( $controller->list( '{ "ORDER BY ' . $arr[ $controller->table] ['table_config'] ['primary_key']  . '" : "DESC" }' ), true );
             foreach( $list as $col ):
                 $pk = $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ];
                 $result .= '<tr>';

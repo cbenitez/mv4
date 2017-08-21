@@ -39,9 +39,9 @@ var mapperJs = {
             }
         });
     },
-    save: function( ){
+    save: function( module ){
         var data = new FormData();
-        if ( $('input[type=file]')[0].files ){
+        if ( $('input[type=file]').val() ){
             $.each( $('input[type=file]')[0].files, function( i, file ) {
                 data.append( file.name, file );
             });
@@ -60,19 +60,18 @@ var mapperJs = {
             processData: false
         })
         .done(function( r ){
-            if ( r.status == '200' ) {
-                $('#load_content').empty().html( r.result );
-            } else {
-                $('#load_content').empty().html(
-                    '<div class="alert alert-' + r.type + '" role="alert">'
-                    + r.message +
-                    '</div >');
+            if ( r.status == '200' ){
+                $('form').reset();
             }
+            $('#message').empty().html(
+                '<div class="alert alert-' + r.type + '" role="alert">'
+                + r.message +
+                '</div >');
         });
     },
     modal: function ( module, pk ) {
         $('#view_modal_content').empty();
-        $('#view_modal_content').load( this.location + 'system/async/modal?module=' + module + '&pk=' + pk);
+        $('#view_modal_content').load( this.location + 'system/async/modal?module=' + module + '&pk=' + pk );
         $('#view_modal').modal('show');
     }
 };
