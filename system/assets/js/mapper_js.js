@@ -1,14 +1,24 @@
 var mapperJs = {
+    limit: 4,
     location: window.location,
     list: function ( module ) {
+        var page = 1;
+        var search = '';
+        if ( $('#search').val() !== "" && $('#search').val() !== undefined ){
+            search = $('#search').val();
+        }
+        if ( $( this ).data('position') !== null && $( this ).data('position') !== undefined ){
+            page = $( this ).data('page');
+        }
         $.ajax({
             url: this.location + 'system/async/list',
-            data: 'module=' + module + '&task=list',
+            data: 'module=' + module + '&task=list&search=' + search + '&limit=' + this.limit + '&page=' + page,
             type: 'POST',
             dataType: 'json',
             success: function (r) {
                 if ( r.status == '200' ) {
                     $('#load_content').empty().html( r.result );
+                    $('.pagination').empty().html( r.navigation );
                 } else {
                     $('#load_content').empty().html(
                         '<div class="alert alert-' + r.type + '" role="alert">'
@@ -17,9 +27,6 @@ var mapperJs = {
                 }
             }
         });
-    },
-    paginate: function () {
-
     },
     action: function ( module, task, pk ) {
         $.ajax({
@@ -60,13 +67,10 @@ var mapperJs = {
             processData: false
         })
         .done(function( r ){
+            _notify(r.message, r.type);
             if ( r.status == '200' ){
-                $('form').reset();
+                mapperJs.list( module );
             }
-            $('#message').empty().html(
-                '<div class="alert alert-' + r.type + '" role="alert">'
-                + r.message +
-                '</div >');
         });
     },
     modal: function ( module, pk ) {

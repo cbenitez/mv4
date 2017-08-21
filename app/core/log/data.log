@@ -1,41 +1,4 @@
-2017-08-20 23:01:42 Controller->save:personas
- select:{"where":" persona_id = 10"}
- exist:[{"persona_id":10,"persona_nombre":"asdasdf","persona_fechanacimiento":"23\/12\/1655","persona_cedula":2134234,"persona_sexo":"H","persona_localidad":"San Lorenzo","persona_departamento":"Central","persona_pais":"paraguay","persona_status":1,"persona_hidden":0,"persona_timestamp":"2017-08-20 19:45:12"}]
- post:{"persona_id":"10","persona_nombre":"David Benitez Diaz","persona_fechanacimiento":"23\/12\/1655","persona_cedula":"2134234","persona_sexo":"hombre","persona_localidad":"San Lorenzo","persona_departamento":"Central","persona_pais":"paraguay","persona_status":"1"}
- result:
- ** 2017-08-20 23:02:22 Controller->save:personas
- select:{"where":" persona_id = 10"}
- exist:1
- post:{"persona_id":"10","persona_nombre":"David Benitez Diaz","persona_fechanacimiento":"23\/12\/1655","persona_cedula":"2134234","persona_sexo":"hombre","persona_localidad":"San Lorenzo","persona_departamento":"Central","persona_pais":"paraguay","persona_status":"1"}
- result:
- ** 2017-08-20 23:05:05 Controller->save:personas
- select:{"where":" persona_id = 10"}
- exist:1
- post:{"persona_id":"10","persona_nombre":"David Benitez Diaz","persona_fechanacimiento":"23\/12\/1655","persona_cedula":"2134234","persona_sexo":"hombre","persona_localidad":"San Lorenzo","persona_departamento":"Central","persona_pais":"paraguay","persona_status":"1"}
- result:
- ** 2017-08-20 23:05:08 Cache stale for template  ** 2017-08-20 23:05:08 Caching template dashboard.html ** 2017-08-20 23:05:22 Controller->save:personas
- select:{"where":" persona_id = 10"}
- exist:1
- post:{"persona_id":"10","persona_nombre":"Christian Diaz","persona_fechanacimiento":"23\/12\/1655","persona_cedula":"2134234","persona_sexo":"hombre","persona_localidad":"San Lorenzo","persona_departamento":"Central","persona_pais":"paraguay","persona_status":"1"}
- result:
- ** 2017-08-20 23:06:17 Controller->save:personas
- select:{"where":" persona_id = 10"}
- exist:1
- post:{"persona_id":"10","persona_nombre":"Christian Diaz","persona_fechanacimiento":"23\/12\/1655","persona_cedula":"2134234","persona_sexo":"hombre","persona_localidad":"San Lorenzo","persona_departamento":"Central","persona_pais":"paraguay","persona_status":"1"}
- result:10
- ** 2017-08-20 23:06:28 Cache hit for template  ** 2017-08-20 23:06:43 Controller->save:personas
- select:{"where":" persona_id = 9"}
- exist:1
- post:{"persona_id":"9","persona_nombre":"David Diaz","persona_fechanacimiento":"24\/12\/1983","persona_cedula":"2341","persona_sexo":"hombre","persona_localidad":"Asuncion","persona_departamento":"Central","persona_pais":"bolivia","persona_status":"1"}
- result:9
- ** 2017-08-20 23:08:28 Cache hit for template  ** 2017-08-20 23:09:00 Controller->save:personas
- select:{"where":" persona_id = 11"}
- exist:1
- post:{"persona_id":"11","persona_nombre":"X tipo","persona_fechanacimiento":"24\/12\/1983","persona_cedula":"234232","persona_sexo":"hombre","persona_localidad":"test","persona_departamento":"test","persona_pais":"argentina","persona_status":"1"}
- result:11
- ** 2017-08-20 23:10:52 Cache stale for template  ** 2017-08-20 23:10:52 Caching template dashboard.html ** 2017-08-20 23:11:11 Controller->save:personas
- select:{"where":" persona_id = 10"}
- exist:1
- post:{"persona_id":"10","persona_nombre":"Otro tipo","persona_fechanacimiento":"23\/12\/1655","persona_cedula":"2134234","persona_sexo":"hombre","persona_localidad":"San Lorenzo","persona_departamento":"Central","persona_pais":"paraguay","persona_status":"1"}
- result:10
- ** 2017-08-20 23:11:29 Cache hit for template  ** 
+2017-08-21 18:27:26 Cache hit for template  ** 2017-08-21 18:27:28 SELECT: params= Array && [] 
+ ** 2017-08-21 18:28:41 Cache hit for template  ** 2017-08-21 18:28:43 SELECT: params= [] && list= [] 
+ ** 2017-08-21 18:31:41 SELECT: params= [] && list= [] 
+ ** 2017-08-21 18:31:44 Cache hit for template  ** 

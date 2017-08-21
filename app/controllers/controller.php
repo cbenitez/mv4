@@ -2,38 +2,115 @@
 class Controller{
     
     protected $list_fields = '';
+    private $page_number = 1;
 
     function __construct( $table ){
         $this->table = $table;
     }
 
     public function save( $data ){
+
         $obj = new Model;
+        
         $obj->table = $this->table;
+        
         $this->list_fields = $this->table_fields();
+        
         $arr = json_decode( $this->list_fields, true );
+        
         $exist = json_decode( $obj->action_select( '{"where":" ' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . number( $data[ $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] ] ) . '"}' ), true );
+        
         if( count( $exist ) == 0 ):
+        
             unset( $data[ $arr[$this->table]['table_config']['primary_key'] ] );
+        
             $result = $obj->action_create( json_encode( $data ) );
+        
         else:
+        
             $obj->primary_key = $arr[$this->table]['table_config']['primary_key'];
+        
             $result = $obj->action_update( json_encode( $data ) );
+        
         endif;
+        
         return $result;
     }
 
     public function delete( $pk ){
+        
         $obj = new Model;
+        
         $obj->table = $this->table;
+        
         $result = $obj->action_delete( $pk );
+        
         return $result;
     }
 
     public function list( $params = "" ){
+        
         $obj = new Model;
+        
         $obj->table = $this->table;
+        
         $result = $obj->action_select( $params );
+        
+        return $result;
+    }
+
+    public function pagination ( $params ){
+
+        extract( json_decode( $params, true ), EXTR_OVERWRITE );
+
+        $obj = new Model;
+        
+        $obj->table = $this->table;
+        
+        if( is_numeric ( $limit ) ):
+
+            $starting = number( $page ) - 1 * $limit;
+
+        endif;
+
+        if ( $limit > 0 ):
+
+            $limiting = '"limit":"' . $starting . ', ' . $limit .'"';
+
+        elseif( $limit == 0 || $limit == NULL ):
+            
+            $limiting = "";
+            
+        endif;
+
+        if( isset( $where ) ):
+
+            $where = '"where":"'.$where.'",';
+
+        endif;
+
+        if( isset( $order ) ):
+
+            $order = '"order by":"'.$order.'",';
+
+        endif;
+
+        $params = '{' . $where . $order . $limiting . '}';
+
+        $list = $obj->action_select( $params );
+
+        $result['list'] = json_decode( $list, true );
+        
+        if( $limit > 0 ):
+
+            $result['navigation'] =	pagination( count( $result['list'] ), $page );
+        
+        else:
+
+            $result['navigation'] = '';
+
+        endif;
+
         return $result;
     }
 

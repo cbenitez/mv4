@@ -4,7 +4,7 @@ class ImageUpload{
 	/************************************
 	* Procesa y redimensiona imagenes   *
 	* Luis Portillo - Noviembre de 2010 *
-	* Ultima modificacion: 13/10/2013 Lucho*
+	* Ultima modificacion: 21/08/2017 Christian*
 	*************************************/
 	
 	private $_Width;
@@ -21,6 +21,7 @@ class ImageUpload{
 	private $_Transparency = false;
 	private $_TransparentColor = array(0,0,0);
 	private $_BackgorundColor  = array(0,0,0);
+	public $_error = '';
 	
 	function __Constructor(){}
 	
@@ -33,7 +34,7 @@ class ImageUpload{
 	public function setSize($w,$h){
 		
 		if($this->toNumber($w) == 0 && $this->toNumber($h) == 0){
-			Message::set("Especifique el alto o ancho máximo para la imagen", MESSAGE_ERROR);
+			$this->_error = "Especifique el alto o ancho máximo para la imagen.";
 			return false;
 		}else{
 			$this->_Width  = $w;
@@ -80,11 +81,11 @@ class ImageUpload{
 	
 	function setTransparency($c,$t=true){
 		if(!is_array($c)){
-			Message::set("Parámetros de color de transparencia incorrectos", MESSAGE_ERROR);
+			$this->_error = "Parámetros de color de transparencia incorrectos";
 			return false;
 		}else{
 			if(count($c) < 3){
-				Message::set("Orden de colores de transparencia incorrectos. Debe ser RGB", MESSAGE_ERROR);
+				$this->_error = "Orden de colores de transparencia incorrectos. Debe ser RGB.";
 				return false;
 			}else{
 				$this->_Transparency = true;
@@ -96,11 +97,11 @@ class ImageUpload{
 	/*fondo de la imagen*/
 	public function setBackgroundColor($c){
 		if(!is_array($this->_BackgorundColor)){
-			Message::set("Parámetros de color de fondo incorrectos", MESSAGE_ERROR);
+			$this->_error = "Parámetros de color de fondo incorrectos.";
 			return false;
 		}else{
 			if(count($c) < 3){
-				Message::set("Orden de colores de fondo incorrectos. Debe ser RGB", MESSAGE_ERROR);
+				$this->_error = "Orden de colores de fondo incorrectos. Debe ser RGB.";
 				return false;
 			}else{
 				$this->_BackgorundColor = $c;
@@ -129,7 +130,7 @@ class ImageUpload{
 		);
 		
 		if(!array_search($m, $a)){
-			Message::set("Parámetro de alineación incorrecto.", MESSAGE_ERROR);
+			$this->_error = "Parámetro de alineación incorrecto.";
 			return false;
 		}else{
 			$this->_Align = $m;
@@ -164,26 +165,25 @@ class ImageUpload{
 				imagesavealpha($image, true);
 				break;
 			default:
-				Message::set("Formato de archivo incorrecto", MESSAGE_ERROR);
+				$this->_error = "Formato de archivo incorrecto.";
 				return false;
+			}
+			
+			return $image;
+			
 		}
 		
-		return $image;
+		/*nombre del archivo a redimensionar*/
 		
-	}
-	
-	/*nombre del archivo a redimensionar*/
-	
-	public function fileToResize($f){
-		$this->_SourceFile = $f;
-	}
-	
+		public function fileToResize($f){
+			$this->_SourceFile = $f;
+		}
+		
 	/*redimensiona la imagen*/
 	public function Resize(){
 		
 		if(!$this->_SourceFile){
-			
-			Message::set("No se encontró el archivo.", MESSAGE_ERROR);
+			$this->_error = "No se encontró el archivo.";
 			return false;
 			
 		}else{
@@ -318,6 +318,10 @@ class ImageUpload{
 			
 		}
 		
+	}
+
+	public function error(){
+		return $this->_error;
 	}
 
 }

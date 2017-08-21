@@ -209,4 +209,59 @@ function base64_to_jpeg($base64_string, $output_file) {
 
     return $output_file;
 }
+
+function pagination( $pages = [], $page = 1 ){
+    $pagination = '';
+    if( $pages['pages'] > 1 ):
+        
+        $first = 1;
+        
+        $back = $page - 1;        
+        $back = ( $back <= 1 ) ? 1 : $back;
+        
+        $next = $page + 1;
+        $next = ( $next >= $pages['pages'] )? $pages['pages'] : $next;
+        
+        $last = $pages['pages'];
+        
+        $pagination .= '<li><a href="javascript:;" onclick="ads_list('.$back.')"><strong><i class="fa fa-arrow-left"></i></strong></a></li>';
+        
+        $i = 1;
+
+        $p = 10;
+
+        if( $pages['pages'] > 10 ):
+            $i = $page;
+            $p = $page + 10;
+        endif;
+        
+        if( $p >= $pages['pages'] ):
+            if( $pages['pages'] > 10 ):
+                $i = $pages['pages'] - 10;
+                if( $i <= 0 ):
+                    $i = 1;
+                endif;
+            endif;
+            $p = $pages['pages'];
+        endif;
+
+        if( $last > $p ):
+            $p = $p - 1;
+        endif;
+
+        for( $x = $i; $x <= $p; $x++ ):
+            $active = $page == $x ? 'class="active"' : '';
+            $pagination .= '<li '.$active.'><a href="javascript:;" onclick="ads_list('.$x.')">'.$x.'</a></li>';
+        endfor;
+
+        if( $last > $p ):
+            $pagination .= '<li class="disabled"><a href="#">...</a></li>';
+            $pagination .= '<li><a href="javascript:;" onclick="ads_list('.$last.')">'.$last.'</a></li>';
+        endif;
+        
+        $pagination .= '<li><a href="javascript:;" onclick="ads_list('.$next.')"><strong><i class="fa fa-arrow-right"></i></strong></a></li>';
+    endif;
+    return $pagination;
+}
+
 ?>

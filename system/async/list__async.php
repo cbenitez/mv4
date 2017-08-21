@@ -1,8 +1,11 @@
 <?php
 require_once '../../app/autoload.php';
 
-$task = param( 'task' );
+$task   = param( 'task' );
 $module = strtolower( param( 'module' ) );
+$page   =  numParam( 'page' );
+$limit  =  numParam( 'limit' );
+$search =  param( 'search' );
 
 switch( $task ):
     case 'list':
@@ -22,12 +25,12 @@ switch( $task ):
         /*
          * Formulario de busqueda
          */
-        $result .= '<form action="" method="post" enctype="text/plain">';
+        $result .= '<form action="" method="post" enctype="text/plain" onsubmit="mapperJs.list(\''.$module.'\');return false;">';
         $result .= ' <div class="form-group">';
         $result .= '     <div class="input-group">';
-        $result .= '         <input type="text" class="form-control" id="search" placeholder="Escriba aqui para filtrar...">';
+        $result .= '         <input type="text" class="form-control" name="search" id="search" placeholder="Escriba aqui para filtrar...">';
         $result .= '         <div class="input-group-btn">';
-        $result .= '             <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>';
+        $result .= '             <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>';
         $result .= '         </div>';
         $result .= '     </div>';
         $result .= ' </div>';
@@ -46,26 +49,58 @@ switch( $task ):
          * Lista de registros dinamica
          */
         $controller = new Controller( $module );
+        
         $list_fields = $controller->table_fields();
+
         $arr = json_decode( $list_fields, true );
+
         if( is_array( $arr[ $controller->table ][ 'fields' ] ) ):
+
             $result .= '<table class="table table-striped table-hover">';
             $result .= '<caption>Listado de registros</caption>';
             $result .= '<thead>';
             $result .= '<tr>';
             $result .= '<th>#</th>';
+            $where = '';
+            
             foreach( $arr[ $controller->table ][ 'fields' ] as $fields => $field ):
+            
                 if( $field['list'] ):
                     $result .= '<th>' . $field['label'] . '</th>';
                     $cols[] = $fields;
                 endif;
+            
+                if( !empty( $search ) ):
+                    $where .= $fields . '"%' . $search . '%" OR ';
+                endif;
+            
             endforeach;
+            
+            if( !empty( $search ) ):
+                $where = substr( $where, 0 , -3 );
+                $where = '"where":' . $where . ',';
+            endif;
+
             $result .= '<th colspan="2">&nbsp;</th>';
             $result .= '</tr>';
             $result .= '</thead>';
             $result .= '<tbody>';
-            $list = json_decode( $controller->list( '{ "ORDER BY ' . $arr[ $controller->table] ['table_config'] ['primary_key']  . '" : "DESC" }' ), true );
-            foreach( $list as $col ):
+
+            if( $page > 0 ):
+                
+                $page = '"page":'.$page . ',';
+
+            endif;
+
+            if( $limit > 0 ):
+                
+                $limit = '"limit":'.$limit . ',';
+
+            endif;
+
+            $params = '{ ' . $page . ' ' . $limit . ' ' . $where . ' "order" : "' . $arr[ $controller->table] ['table_config'] ['primary_key']  . ' desc" }';
+            $list =  $controller->pagination( $params );
+            foreach( $list['list'] as $col ):
                 $pk = $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ];
                 $result .= '<tr>';
                 $result .= '<td>' . $pk . '</td>';
@@ -92,7 +127,10 @@ switch( $task ):
             endforeach;
             $result .= '</tbody>';
             $result .= '</table>';
-            $json = [ 'status' => 200, 'result' => $result ];
+
+            $navigation = $list['navigation'];
+
+            $json = [ 'status' => 200, 'result' => $result, 'navigation' => $navigation ];
         else:
             $json = [ 'status' => 404, 'message' => 'Datos no encontrados.', 'type' => 'warning' ];
         endif;

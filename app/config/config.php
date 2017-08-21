@@ -34,7 +34,7 @@ return [
                       "pass"        => "123456"
         ],
         "cache"     => [
-                      "log"         =>  "Off",
+                      "log"         =>  "On",
                       "template"    =>  "On",
                       "memcached"   =>  "Off",
         ],
@@ -44,6 +44,6 @@ return [
                       "userAds"     => "_ads_" . strtolower( metaphone( $_SERVER['SERVER_NAME'] ) ),
                       "hash_pass_key"=> "catsFLYhigh2000miles"
         ],
-        "menu_config" => json_decode( file_get_contents( realpath( dirname( __FILE__ ) ) . '/../../app/config/tables/menu_config.json' ), true )
+        "menu_config" => json_decode( @file_get_contents( realpath( dirname( __FILE__ ) ) . '/../../app/config/tables/menu_config.json' ), true )
 ];
           

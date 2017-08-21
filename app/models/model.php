@@ -32,7 +32,7 @@ class Model extends Database {
         return $result;
     }
 
-    public function action_select( $params = "" ){
+    public function action_select( $params = "" ){        
         $conditions = "";
         if( !empty( $params ) ):
             if( isJSON( $params ) ):
@@ -45,6 +45,7 @@ class Model extends Database {
             endif;
         endif;
         $list = $this->select( "SELECT {$this->fields} FROM {$this->table} {$conditions}" );
+        Logger::log("SELECT: params= ".json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE )." && list= ".json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE )." \n\r");
         return json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE );
     }
 

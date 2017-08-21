@@ -29,7 +29,7 @@ if( is_array( $arr[ $controller->table ][ 'fields' ] ) ):
                     $table .= '<td>' . date('d/m/Y H:i', strtotime( $col[ $cols[ $i ] ] ) ) . '</td>';
                 break;
                 default:
-                    $table .= '<td>' . $col[ $cols[ $i ] ] . '</td>';
+                    $table .= '<td>' . ucfirst( $col[ $cols[ $i ] ] ) . '</td>';
             endswitch;
             $table .= '</tr>';
         endfor;
