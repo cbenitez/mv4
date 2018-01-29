@@ -32,20 +32,20 @@ class Model extends Database {
         return $result;
     }
 
-    public function action_select( $params = "" ){        
+    public function action_select( $params = "" ){
         $conditions = "";
         if( !empty( $params ) ):
             if( isJSON( $params ) ):
                 $params = json_decode( $params, true );
                 if( is_array( $params ) ):
                     foreach( $params as $n => $x ):
-                        $conditions .= "{$n} {$x}";
+                        $conditions .= "{$n} {$x} ";
                     endforeach;
                 endif;
             endif;
         endif;
         $list = $this->select( "SELECT {$this->fields} FROM {$this->table} {$conditions}" );
-        Logger::log("SELECT: params= ".json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE )." && list= ".json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE )." \n\r");
+        Logger::log("SELECT: SELECT {$this->fields} FROM {$this->table} {$conditions}, params= ".json_encode( $params, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE )." && list= ".json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE )." \n\r");
         return json_encode( $list, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE );
     }
 

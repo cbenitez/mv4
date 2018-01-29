@@ -3,6 +3,7 @@
 class Database extends PDO
 {
     protected $DB_TYPE;
+    protected $DSN;
     var $DB_HOST; 
     var $DB_NAME; 
     var $DB_USER; 
@@ -10,14 +11,18 @@ class Database extends PDO
     
     public function __construct()
     {
-        $this->DB_TYPE = config()['database']['type'];
-        $this->DB_HOST = config()['database']['host']; 
-        $this->DB_NAME = config()['database']['name']; 
-        $this->DB_USER = config()['database']['user']; 
-        $this->DB_PASS = config()['database']['pass']; 
-        parent::__construct($this->DB_TYPE.':host='.$this->DB_HOST.';dbname='.$this->DB_NAME, $this->DB_USER, $this->DB_PASS);
-        
-        //parent::setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTIONS);
+        $this->DB_TYPE  = config()['database']['type'];
+        $this->DB_HOST  = config()['database']['host']; 
+        $this->DB_NAME  = config()['database']['name']; 
+        $this->DB_USER  = config()['database']['user']; 
+        $this->DB_PASS  = config()['database']['pass']; 
+        $this->DSN      = $this->DB_TYPE.':host='.$this->DB_HOST.';dbname='.$this->DB_NAME;
+        try {
+            parent::__construct($this->DSN, $this->DB_USER, $this->DB_PASS);
+            //parent::setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTIONS);
+        }catch ( \PDOException $e ){
+            hule( $e->getMessage() );
+        }
     }
     
     /**

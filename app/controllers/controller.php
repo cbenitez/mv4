@@ -73,7 +73,7 @@ class Controller{
 
         endif;
 
-        if ( $limit > 0 ):
+        if ( $starting > 0 ):
 
             $limiting = '"limit":"' . $starting . ', ' . $limit .'"';
 
@@ -91,7 +91,7 @@ class Controller{
 
         if( isset( $order ) ):
 
-            $order = '"order by":"'.$order.'",';
+            $order = '"order by":"'.$order.'", ';
 
         endif;
 
@@ -115,36 +115,39 @@ class Controller{
     }
 
     public function form_construct( $pk = 0 ){
+
         $this->list_fields = $this->table_fields();
+        
         $form = '';
+        
         $arr = json_decode( $this->list_fields, true );
+        
         if( $pk > 0 ):
+        
             $list = json_decode( $this->list( '{"where":" ' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . $pk . '"}' ), true );  
+        
             $form .= '<input type="hidden" name="' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . '" value="' . $pk . '">';          
+        
         else:
+        
             $form .= '<input type="hidden" name="' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . '" value="0">';          
+        
         endif;
+        
         if( is_array( $arr[ $this->table ][ 'fields' ] ) ):
+        
             foreach( $arr[ $this->table ][ 'fields' ] as $fields => $field ):
+        
                 if( is_array( $list ) && count( $list ) > 0 ):
+        
                     $field['val'] = $list[0][ $fields ];
+        
                 endif;
+        
                 $field['name'] = $fields;
+        
                 switch( $field[ 'type' ] ):
-                    case 'password':
-                    case 'datetime':
-                    case 'datetime-local':
-                    case 'date': 
-                    case 'month':
-                    case 'time': 
-                    case 'week': 
-                    case 'number':
-                    case 'email': 
-                    case 'url': 
-                    case 'search':
-                    case 'tel': 
-                    case 'color':
-                    case 'text': 
+                    case 'password': case 'datetime': case 'datetime-local': case 'date': case 'month': case 'time': case 'week': case 'number': case 'email': case 'url': case 'search': case 'tel': case 'color': case 'text': 
                         $form .= input( $field );
                     break;
                     case 'textarea':
@@ -163,16 +166,22 @@ class Controller{
                         $form .= check_radio( $field );
                     break;
                 endswitch;
+        
             endforeach;
+        
         endif;
         return $form;
     }
 
     public function table_fields(){
         $json = false;
+        
         if( file_exists( config()['route']['tables'] . slugit( $this->table ) . '.json' ) ):
+        
             $json = file_get_contents( config()['route']['tables'] . slugit( $this->table ) . '.json' );
+        
         endif;
+        
         return $json;
     }
 

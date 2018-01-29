@@ -15,7 +15,8 @@ class Dashboard extends Tova
         $title_site     = 'Dashboard';
         $project_name   = config()['project_name'];
         $assets         = config()['host']['sys_assets'];
-        $uri            = config()['host']['app'];
+        $url            = config()['host']['app'];
+        $app            = config()['host']['app'];
         $section_title  = '';
 
         $this->assign([
@@ -23,7 +24,8 @@ class Dashboard extends Tova
             'title_site'    => $title_site,
             'assets'        => $assets,
             'section_title' => $section_title,
-            'app'           => $app
+            'app'           => $app,
+            'url'           => $url
         ]);
         
         $menu_config['menu_config'] = config()['menu_config'];

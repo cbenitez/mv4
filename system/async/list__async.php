@@ -1,8 +1,8 @@
 <?php
 require_once '../../app/autoload.php';
 
-$task   = param( 'task' );
-$module = strtolower( param( 'module' ) );
+$task   =  param( 'task' );
+$module =  strtolower( param( 'module' ) );
 $page   =  numParam( 'page' );
 $limit  =  numParam( 'limit' );
 $search =  param( 'search' );
@@ -54,7 +54,7 @@ switch( $task ):
 
         $arr = json_decode( $list_fields, true );
 
-        if( is_array( $arr[ $controller->table ][ 'fields' ] ) ):
+        if( haveRows( $arr[ $controller->table ][ 'fields' ] ) ):
 
             $result .= '<table class="table table-striped table-hover">';
             $result .= '<caption>Listado de registros</caption>';
@@ -62,12 +62,12 @@ switch( $task ):
             $result .= '<tr>';
             $result .= '<th>#</th>';
             $where = '';
-            
             foreach( $arr[ $controller->table ][ 'fields' ] as $fields => $field ):
             
                 if( $field['list'] ):
                     $result .= '<th>' . $field['label'] . '</th>';
                     $cols[] = $fields;
+                    $type[] = $field['type'];
                 endif;
             
                 if( !empty( $search ) ):
@@ -105,14 +105,20 @@ switch( $task ):
                 $result .= '<tr>';
                 $result .= '<td>' . $pk . '</td>';
                 for( $i = 0; $i <= count( $cols ); $i++ ):
-                    $suffix = end( explode( '_', $cols[ $i ] ) );
-                    switch( $suffix ):
-                        case 'status':
-                            $result .= '<td align="center"><i class="fa fa-' . ( $col[ $cols[ $i ] ] == 1 ? 'check-circle text-success' : 'minus-circle text-muted' ) . '"></i></td>';
+                    switch( $type[ $i ] ):
+                        case 'number':
+                            $result .= '<td class="text-right">' . number_format( $col[ $cols[ $i ] ], 0 , '', '.' ) . '</td>';
                         break;
+                        case 'checkbox':
+                            $result .= '<td class="text-center"><i class="fa fa-' . ( $col[ $cols[ $i ] ] == 1 ? 'check-circle text-success' : 'minus-circle text-muted' ) . '"></i></td>';
+                        break;
+                        case 'date':
+                            $result .= '<td>' . date('d/m/Y', strtotime( $col[ $cols[ $i ] ] ) ) . '</td>';
+                            break;
                         case 'timestamp':
                             $result .= '<td>' . date('d/m/Y H:i', strtotime( $col[ $cols[ $i ] ] ) ) . '</td>';
-                        break;
+                            break;
+                        case 'text':
                         default:
                             $result .= '<td>' . $col[ $cols[ $i ] ] . '</td>';
                     endswitch;

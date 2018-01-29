@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php
 require_once __DIR__ . '/app/autoload.php';
-/*
 $m = new Mapper;
-$m->init();*/
+$m->init();
+/*
 $params = '{"page":"1","where":"1=1","order":"by id asc","limit":"12"}';
 extract( json_decode( $params, true ) );
 pr( json_decode( $params, true ) );
@@ -11,3 +11,4 @@ pr( $page );
 pr( $where ); 
 pr( $order ); 
 pr( $limit ); 
+*/

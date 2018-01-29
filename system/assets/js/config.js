@@ -1,4 +1,4 @@
-$.blockUI.defaults.message = '<img src="{{assets}}images/wedges.svg">';
+$.blockUI.defaults.message = '<img src="' + mapperJs.location + 'assets/images/wedges.svg">';
 $.blockUI.defaults.css.backgroundColor = "none";
 $.blockUI.defaults.css.border = "none";
 $.blockUI.defaults.overlayCSS.opacity = 0.1;
