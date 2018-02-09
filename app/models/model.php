@@ -42,6 +42,8 @@ class Model extends Database {
                         $conditions .= "{$n} {$x} ";
                     endforeach;
                 endif;
+            else:
+                $conditions = 'Error parse json!';
             endif;
         endif;
         $list = $this->select( "SELECT {$this->fields} FROM {$this->table} {$conditions}" );

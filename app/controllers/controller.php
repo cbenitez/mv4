@@ -77,9 +77,9 @@ class Controller{
 
             $limiting = '"limit":"' . $starting . ', ' . $limit .'"';
 
-        elseif( $limit == 0 || $limit == NULL ):
+        else:
             
-            $limiting = "";
+            $limiting = '"limit":"0, 9"';
             
         endif;
 
