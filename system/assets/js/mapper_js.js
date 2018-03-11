@@ -1,7 +1,7 @@
 var mapperJs = {
     limit: 4,
     location: window.location,
-    list: function ( module ) {
+    list: function ( module, name ) {
         var page = 1;
         var search = '';
         if ( $('#search').val() !== "" && $('#search').val() !== undefined ){
@@ -12,7 +12,7 @@ var mapperJs = {
         }
         $.ajax({
             url: this.location + 'system/async/list',
-            data: 'module=' + module + '&task=list&search=' + search + '&limit=' + this.limit + '&page=' + page,
+            data: 'module=' + module + '&name=' + name + '&task=list&search=' + search + '&limit=' + this.limit + '&page=' + page,
             type: 'POST',
             dataType: 'json',
             success: function (r) {
@@ -28,10 +28,10 @@ var mapperJs = {
             }
         });
     },
-    action: function ( module, task, pk ) {
+    action: function ( module, name, task, pk ) {
         $.ajax({
             url: this.location + 'system/async/' + task,
-            data: 'module=' + module + '&task=' + task + '&pk=' + pk,
+            data: 'module=' + module + '&name=' + name + '&task=' + task + '&pk=' + pk,
             type: 'POST',
             dataType: 'json',
             success: function (r) {
@@ -46,7 +46,7 @@ var mapperJs = {
             }
         });
     },
-    save: function( module ){
+    save: function( module, name ){
         var data = new FormData();
         if ( $('input[type=file]').val() ){
             $.each( $('input[type=file]')[0].files, function( i, file ) {
@@ -69,7 +69,7 @@ var mapperJs = {
         .done(function( r ){
             _notify(r.message, r.type);
             if ( r.status == '200' ){
-                mapperJs.list( module );
+                mapperJs.list( module, name );
             }
         });
     },

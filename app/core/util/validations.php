@@ -15,6 +15,10 @@ function token($key){
 	return Encryption::Encrypt($key);
 }
 
+function reverse_token($key){
+	return Encryption::Decrypt($key);
+}
+
 function input_token($key){
     $token = token($key);
     print '<input type="hidden" name="'.$key.'_token" id="'.$key.'_token" value="'.$token.'" />';

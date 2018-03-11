@@ -3,6 +3,7 @@ require_once '../../app/autoload.php';
 
 $task   =  param( 'task' );
 $module =  strtolower( param( 'module' ) );
+$name   =  strtolower( param( 'name' ) );
 $page   =  numParam( 'page' );
 $limit  =  numParam( 'limit' );
 $search =  param( 'search' );
@@ -14,18 +15,18 @@ switch( $task ):
          */
         $result = '<ol class="breadcrumb">';
         $result .= '<li><a href="' . config()['host']['app'] . 'dashboard">Dashboard</a></li>';
-        $result .= '<li class="active">' . ucfirst( $module ) . '</li>';
+        $result .= '<li class="active">' . ucfirst( $name ) . '</li>';
         $result .= '</ol>';
 
         /*
          * Titulo del modulo
          */
-        $result .= '<h1 class="page-header">' . ucfirst( $module ) . '</h1>';
+        $result .= '<h1 class="page-header">' . ucfirst( $name ) . '</h1>';
 
         /*
          * Formulario de busqueda
          */
-        $result .= '<form action="" method="post" enctype="text/plain" onsubmit="mapperJs.list(\''.$module.'\');return false;">';
+        $result .= '<form action="" method="post" enctype="text/plain" onsubmit="mapperJs.list(\''.$module.'\',\''.$name.'\');return false;">';
         $result .= ' <div class="form-group">';
         $result .= '     <div class="input-group">';
         $result .= '         <input type="text" class="form-control" name="search" id="search" placeholder="Escriba aqui para filtrar..." value="'.$search.'">';
@@ -41,7 +42,7 @@ switch( $task ):
          */
         $result .= '<div class="row">';
         $result .= ' <div class="col-md-2 col-md-offset-10 text-right">';
-        $result .= '     <button class="btn btn-success" type="button" onclick="mapperJs.action(\''.$module.'\',\'form\',0);"><i class="fa fa-plus-circle"></i> Nuevo registro</button>';
+        $result .= '     <button class="btn btn-success" type="button" onclick="mapperJs.action(\''.$module.'\',\''.$name.'\',\'form\',0);"><i class="fa fa-plus-circle"></i> Nuevo registro</button>';
         $result .= ' </div>';
         $result .= '</div>';
         

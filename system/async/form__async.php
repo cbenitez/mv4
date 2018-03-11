@@ -1,9 +1,10 @@
 <?php
 require_once '../../app/autoload.php';
 
-$task = param( 'task' );
-$pk = numParam( 'pk' );
+$task   = param( 'task' );
+$pk     = numParam( 'pk' );
 $module = strtolower( param( 'module' ) );
+$name   = strtolower( param( 'name' ) );
 $controller = new Controller( $module );
 if( $pk > 0 ):
     $subtit = "Modificar";
@@ -17,31 +18,31 @@ switch( $task ):
          */
         $result = '<ol class="breadcrumb">';
         $result .= '<li><a href="' . config()['host']['app'] . 'dashboard">Dashboard</a></li>';
-        $result .= '<li><a href="javascript:;" onclick="mapperJs.list(\'' . $module . '\')">' . ucfirst( $module ) . '</a></li>';
+        $result .= '<li><a href="javascript:;" onclick="mapperJs.list(\'' . $module . '\',\'' . $name . '\')">' . ucfirst( $name ) . '</a></li>';
         $result .= '<li class="active">' . ucfirst( $subtit ) . '</li>';
         $result .= '</ol>';
 
         /*
          * Titulo del modulo
          */
-        $result .= '<h1 class="page-header">' . ucfirst( $module ) . '</h1>';
+        $result .= '<h1 class="page-header">' . ucfirst( $name ) . '</h1>';
 
         /*
         * Boton volver
         */
         $result .= '<div class="row">';
         $result .= ' <div class="col-md-2 col-md-offset-10 text-right">';
-        $result .= '    <button class="btn btn-primary" type="button" onclick="mapperJs.list(\'' . $module . '\')"><i class="fa fa-arrow-left"></i> Volver</button>';
+        $result .= '    <button class="btn btn-primary" type="button" onclick="mapperJs.list(\'' . $module . '\',\'' . $name . '\')"><i class="fa fa-arrow-left"></i> Volver</button>';
         $result .= ' </div>';
         $result .= '</div>';
 
         /*
          * Formulario del modulo
          */
-        $result .= '<form action="" method="post" enctype="multipart/form-data" onsubmit="mapperJs.save(\'' . $module . '\');return false;">';
+        $result .= '<form action="" method="post" enctype="multipart/form-data" onsubmit="mapperJs.save(\'' . $module . '\',\'' . $name . '\');return false;">';
         $result .=      $controller->form_construct( $pk );
         $result .= '<div class="well">';
-        $result .= '    <button class="btn btn-danger" type="button" onclick="mapperJs.list(\'' . $module . '\')"><i class="fa fa-times"></i> Cancelar</button>';
+        $result .= '    <button class="btn btn-danger" type="button" onclick="mapperJs.list(\'' . $module . '\',\'' . $name . '\')"><i class="fa fa-times"></i> Cancelar</button>';
         $result .= '    <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> Guardar</button>';
         $result .= '</div>';
         $result .= '</form>';

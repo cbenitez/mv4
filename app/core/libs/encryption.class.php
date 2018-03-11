@@ -10,7 +10,7 @@ class Encryption{
 		$encMode = MCRYPT_MODE_ECB;
 		$return  = mcrypt_encrypt($encType, $key, $value, $encMode, mcrypt_create_iv(mcrypt_get_iv_size($encType, $encMode), MCRYPT_RAND));
 		$return  = strrev($return);
-		return base64_encode($return);
+		return rtrim( strtr( base64_encode( $return ), '+/', '-_'), '=');
 
 	}
 
@@ -18,7 +18,7 @@ class Encryption{
 
 		$key = config()['authToken'];
 
-		$value	 = base64_decode($value);
+		$value	 = base64_decode( strtr( $value, '-_', '+/') . str_repeat('=', 3 - ( 3 + strlen( $value ) ) % 4 ) ); 
 		$value	 = strrev($value);
 
 		$encType = MCRYPT_RIJNDAEL_256;

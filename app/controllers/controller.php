@@ -1,188 +1,250 @@
 <?php
 class Controller{
-    
-    protected $list_fields = '';
-    private $page_number = 1;
+	
+	protected $list_fields 	= '';
+	private $page_number 	= 1;
+	private $config;
 
-    function __construct( $table ){
-        $this->table = $table;
-    }
+	function __construct( $table ){
+		$this->table 	= $table;
+		$this->config 	= config();
+	}
 
-    public function save( $data ){
+	public function save( $data ){
 
-        $obj = new Model;
-        
-        $obj->table = $this->table;
-        
-        $this->list_fields = $this->table_fields();
-        
-        $arr = json_decode( $this->list_fields, true );
-        
-        $exist = json_decode( $obj->action_select( '{"where":" ' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . number( $data[ $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] ] ) . '"}' ), true );
-        
-        if( count( $exist ) == 0 ):
-        
-            unset( $data[ $arr[$this->table]['table_config']['primary_key'] ] );
-        
-            $result = $obj->action_create( json_encode( $data ) );
-        
-        else:
-        
-            $obj->primary_key = $arr[$this->table]['table_config']['primary_key'];
-        
-            $result = $obj->action_update( json_encode( $data ) );
-        
-        endif;
-        
-        return $result;
-    }
+		$obj = new Model;
+		
+		$obj->table = $this->table;
+		
+		$this->list_fields = $this->table_fields();
+		
+		$arr = json_decode( $this->list_fields, true );
+		
+		$exist = json_decode( $obj->action_select( '{"where":" ' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . number( $data[ $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] ] ) . '"}' ), true );
+		
+		if( count( $exist ) == 0 ):
+		
+			unset( $data[ $arr[$this->table]['table_config']['primary_key'] ] );
+		
+			$result = $obj->action_create( json_encode( $data ) );
+		
+		else:
+		
+			$obj->primary_key = $arr[$this->table]['table_config']['primary_key'];
+		
+			$result = $obj->action_update( json_encode( $data ) );
+		
+		endif;
+		
+		return $result;
+	}
 
-    public function delete( $pk ){
-        
-        $obj = new Model;
-        
-        $obj->table = $this->table;
-        
-        $result = $obj->action_delete( $pk );
-        
-        return $result;
-    }
+	public function delete( $pk ){
+		
+		$obj = new Model;
+		
+		$obj->table = $this->table;
+		
+		$result = $obj->action_delete( $pk );
+		
+		return $result;
+	}
 
-    public function list( $params = "" ){
-        
-        $obj = new Model;
-        
-        $obj->table = $this->table;
-        
-        $result = $obj->action_select( $params );
-        
-        return $result;
-    }
+	public function list( $params = "" ){
+		
+		$obj = new Model;
+		
+		$obj->table = $this->table;
+		
+		$result = $obj->action_select( $params );
+		
+		return $result;
+	}
 
-    public function pagination ( $params ){
+	public function pagination ( $params ){
 
-        extract( json_decode( $params, true ), EXTR_OVERWRITE );
+		extract( json_decode( $params, true ), EXTR_OVERWRITE );
 
-        $obj = new Model;
-        
-        $obj->table = $this->table;
-        
-        if( is_numeric ( $limit ) ):
+		$obj = new Model;
+		
+		$obj->table = $this->table;
+		
+		if( is_numeric ( $limit ) ):
 
-            $starting = number( $page ) - 1 * $limit;
+			$starting = number( $page ) - 1 * $limit;
 
-        endif;
+		endif;
 
-        if ( $starting > 0 ):
+		if ( $starting > 0 ):
 
-            $limiting = '"limit":"' . $starting . ', ' . $limit .'"';
+			$limiting = '"limit":"' . $starting . ', ' . $limit .'"';
 
-        else:
-            
-            $limiting = '"limit":"0, 9"';
-            
-        endif;
+		else:
+			
+			$limiting = '"limit":"0, 9"';
+			
+		endif;
 
-        if( isset( $where ) ):
+		if( isset( $where ) ):
 
-            $where = '"where":"'.$where.'",';
+			$where = '"where":"'.$where.'",';
 
-        endif;
+		endif;
 
-        if( isset( $order ) ):
+		if( isset( $order ) ):
 
-            $order = '"order by":"'.$order.'", ';
+			$order = '"order by":"'.$order.'", ';
 
-        endif;
+		endif;
 
-        $params = '{' . $where . $order . $limiting . '}';
+		$params = '{' . $where . $order . $limiting . '}';
 
-        $list = $obj->action_select( $params );
+		$list = $obj->action_select( $params );
 
-        $result['list'] = json_decode( $list, true );
-        
-        if( $limit > 0 ):
+		$result['list'] = json_decode( $list, true );
+		
+		if( $limit > 0 ):
 
-            $result['navigation'] =	pagination( count( $result['list'] ), $page );
-        
-        else:
+			$result['navigation'] =	pagination( count( $result['list'] ), $page );
+		
+		else:
 
-            $result['navigation'] = '';
+			$result['navigation'] = '';
 
-        endif;
+		endif;
 
-        return $result;
-    }
+		return $result;
+	}
 
-    public function form_construct( $pk = 0 ){
+	public function upload(){
 
-        $this->list_fields = $this->table_fields();
-        
-        $form = '';
-        
-        $arr = json_decode( $this->list_fields, true );
-        
-        if( $pk > 0 ):
-        
-            $list = json_decode( $this->list( '{"where":" ' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . $pk . '"}' ), true );  
-        
-            $form .= '<input type="hidden" name="' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . '" value="' . $pk . '">';          
-        
-        else:
-        
-            $form .= '<input type="hidden" name="' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . '" value="0">';          
-        
-        endif;
-        
-        if( is_array( $arr[ $this->table ][ 'fields' ] ) ):
-        
-            foreach( $arr[ $this->table ][ 'fields' ] as $fields => $field ):
-        
-                if( is_array( $list ) && count( $list ) > 0 ):
-        
-                    $field['val'] = $list[0][ $fields ];
-        
-                endif;
-        
-                $field['name'] = $fields;
-        
-                switch( $field[ 'type' ] ):
-                    case 'password': case 'datetime': case 'datetime-local': case 'date': case 'month': case 'time': case 'week': case 'number': case 'email': case 'url': case 'search': case 'tel': case 'color': case 'text': 
-                        $form .= input( $field );
-                    break;
-                    case 'textarea':
-                        $form .= textarea( $field );
-                    break;
-                    case 'select':
-                        $form .= select( $field );
-                    break;
-                    case 'upload':
-                        $form .= upload( $field );
-                    break;
-                    case 'checkbox':
-                        $form .= check_radio( $field );
-                    break;
-                    case 'radio':
-                        $form .= check_radio( $field );
-                    break;
-                endswitch;
-        
-            endforeach;
-        
-        endif;
-        return $form;
-    }
+		$this->list_fields = $this->table_fields();
 
-    public function table_fields(){
-        $json = false;
-        
-        if( file_exists( config()['route']['tables'] . slugit( $this->table ) . '.json' ) ):
-        
-            $json = file_get_contents( config()['route']['tables'] . slugit( $this->table ) . '.json' );
-        
-        endif;
-        
-        return $json;
-    }
+		$arr = json_decode( $this->list_fields, true );
+
+		$prefix = str_replace( '_id', '', $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] );
+
+		if(strlen($_FILES[$prefix . '_file_name']['name'])> 0):
+
+			if($_FILES[$prefix . '_file_name']['error'] == 0):
+
+				if( !is_dir( $this->config['route']['upload'] . $prefix ) ):
+					@mkdir( $this->config['route']['upload'] . $prefix, 0777 );
+				endif;
+
+				$sourceName	 = $_FILES[$prefix . '_file_name']['name'];
+				$sourceImage = $_FILES[$prefix . '_file_name']['tmp_name'];
+				$targetImage = strtoupper(uniqid(randomnumbers(6,8).'_'.randomnumbers(6,8).'_'));
+				$size = getimagesize($sourceImage);
+				//$size_w = $size[0]; // width
+				//$size_h = $size[1]; // height
+
+				$size_w = 600; // width
+				$size_h = 600; // height
+
+				/* sube la foto */
+				$img = new ImageUpload();
+				$img->setOutputFormat("JPG");
+				$img->fileToResize($sourceImage);
+				$img->setAlignment("center");
+				$img->setBackgroundColor(array(255, 255, 255));
+
+				$img->setOutputFile($targetImage . "_B");
+				$img->setTarget($this->config['route']['upload'] . $prefix . "/");
+				$img->setSize($size_w,$size_h);
+				$img->Resize();
+				$file_large = $img->getOutputFileName();
+
+				$img->setOutputFile($targetImage . "_S");
+				$img->setSize(150,150);
+				$img->Resize();
+				$file_small = $img->getOutputFileName();
+
+				$_POST[ $prefix . '_file_name' ]	= $sourceName;
+				$_POST[ $prefix . '_big_path' ]		= $this->config['route']['upload'] . $prefix . "/" . $file_large;
+				$_POST[ $prefix . '_big_url' ]		= $this->config['host']['upload']  . $prefix . "/" . $file_large;
+				$_POST[ $prefix . '_small_path' ]	= $this->config['route']['upload'] . $prefix . "/" . $file_small;
+				$_POST[ $prefix . '_small_url' ]	= $this->config['host']['upload']  . $prefix . "/" . $file_small;
+
+			else:
+
+			endif;
+
+		else:
+
+		endif;
+	}
+
+	public function form_construct( $pk = 0 ){
+
+		$this->list_fields = $this->table_fields();
+		
+		$form = '';
+		
+		$arr = json_decode( $this->list_fields, true );
+		
+		if( $pk > 0 ):
+		
+			$list = json_decode( $this->list( '{"where":" ' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . $pk . '"}' ), true );  
+		
+			$form .= '<input type="hidden" name="' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . '" value="' . $pk . '">';          
+		
+		else:
+		
+			$form .= '<input type="hidden" name="' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . '" value="0">';          
+		
+		endif;
+		
+		if( is_array( $arr[ $this->table ][ 'fields' ] ) ):
+		
+			foreach( $arr[ $this->table ][ 'fields' ] as $fields => $field ):
+		
+				if( is_array( $list ) && count( $list ) > 0 ):
+		
+					$field['val'] = $list[0][ $fields ];
+		
+				endif;
+		
+				$field['name'] = $fields;
+		
+				switch( $field[ 'type' ] ):
+					case 'password': case 'datetime': case 'datetime-local': case 'date': case 'month': case 'time': case 'week': case 'number': case 'email': case 'url': case 'search': case 'tel': case 'color': case 'text': 
+						$form .= input( $field );
+					break;
+					case 'textarea':
+						$form .= textarea( $field );
+					break;
+					case 'select':
+						$form .= select( $field );
+					break;
+					case 'upload':
+					case 'image':
+						$form .= upload( $field );
+					break;
+					case 'checkbox':
+						$form .= check_radio( $field );
+					break;
+					case 'radio':
+						$form .= check_radio( $field );
+					break;
+				endswitch;
+		
+			endforeach;
+		
+		endif;
+		return $form;
+	}
+
+	public function table_fields(){
+		$json = false;
+		
+		if( file_exists( config()['route']['tables'] . slugit( $this->table ) . '.json' ) ):
+		
+			$json = file_get_contents( config()['route']['tables'] . slugit( $this->table ) . '.json' );
+		
+		endif;
+		
+		return $json;
+	}
 
 }

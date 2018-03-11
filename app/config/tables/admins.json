@@ -1,1 +1,1 @@
-{"admins":{"table_config":{"primary_key":"admin_id"}}}
+{"admins":{"table_config":{"primary_key":"admin_id"},"fields":{"group_id":{"fk_table":"admins_groups","fk_field_id":"group_id"}}}}
