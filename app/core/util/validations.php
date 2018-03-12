@@ -180,8 +180,8 @@ function setStatusCode($code, $description = null){
       	507 => _("Insufficient Storage"),
       	508 => _("Loop Detected"),
       	509 => _("Bandwidth Limit Exceeded"),
-      	509 => _("Not Extended"),
-      	509 => _("Network Authentication Required")
+      	510 => _("Not Extended"),
+      	511 => _("Network Authentication Required")
 	);
 
 	if(isset($status_list[$code])){

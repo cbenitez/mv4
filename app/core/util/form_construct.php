@@ -416,7 +416,7 @@ function upload( $params ){
 		if( $params['accept'] ):
 			$accept = 'accept="' . $params['accept'] . '"';
 		endif;
-	
+
 	endif;
 
 	$upload =

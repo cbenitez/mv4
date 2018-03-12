@@ -5,12 +5,15 @@ $module = strtolower( param( 'module' ) );
 
 $controller = new Controller( $module );
 
-$return = $controller->save( $_POST );
+$r = $controller->upload( $_FILES );
 
-if( $return > 0 ):
-    $json = [ 'status' => 200, 'message' => 'Los datos se guardaron con exito.', 'type' => 'success' ]; 
+if( $r['code'] != 404 ):
+	$r = $controller->save( $_POST );
+endif;
+if( $r['code'] == 200 || $r['code'] == 201 ):
+	$json = [ 'status' => 'success', 'code' => $r['code'], 'message' => message( $r['code'] ), 'type' => 'success' ]; 
 else:
-    $json = [ 'status' => 404, 'message' => 'Los datos no se pudieron guardar.', 'type' => 'warning' ];
+	$json = [ 'status' => 'error', 'code' => $r['code'], 'message' => message( 404, $r['description'] ), 'type' => 'warning' ];
 endif;
 
 setApplicationJSON();
