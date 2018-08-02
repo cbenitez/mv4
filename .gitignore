@@ -1,4 +1,5 @@
 test.php
 /upload/*
+/upload
 .vscode
 /app/core/log/*
