@@ -2,5 +2,5 @@ test.php
 /upload/*
 /upload
 .vscode
-/app/core/log/*
+app/core/log/data.log
 app/cache/template
