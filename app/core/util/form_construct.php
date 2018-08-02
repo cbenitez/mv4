@@ -94,11 +94,11 @@ function input( $params ){
 			$class = $params['class'];
 		endif;
 
-		if( $params['required'] ):
+		if( $params['required'] == "true" ):
 			$required = 'required';
 		endif;
 
-		if( $params['disabled'] ):
+		if( $params['disabled'] == "true" ):
 			$disabled = 'disabled';
 		endif;
 
@@ -164,11 +164,11 @@ function textarea( $params ){
 			$class = $params['class'];
 		endif;
 
-		if( $params['required'] ):
+		if( $params['required'] == "true" ):
 			$required = 'required';
 		endif;
 
-		if( $params['disabled'] ):
+		if( $params['disabled'] == "true" ):
 			$disabled = 'disabled';
 		endif;
 
@@ -230,11 +230,11 @@ function select( $params ){
 			$class = $params['class'];
 		endif;
 
-		if( $params['required'] ):
+		if( $params['required'] == "true" ):
 			$required = 'required';
 		endif;
 
-		if( $params['disabled'] ):
+		if( $params['disabled'] == "true" ):
 			$disabled = 'disabled';
 		endif;
 
@@ -323,11 +323,11 @@ function check_radio( $params ){
 			$class = $params['class'];
 		endif;
 
-		if( $params['required'] ):
+		if( $params['required'] == "true" ):
 			$required = 'required';
 		endif;
 
-		if( $params['disabled'] ):
+		if( $params['disabled'] == "true" ):
 			$disabled = 'disabled';
 		endif;
 

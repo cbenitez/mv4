@@ -23,15 +23,10 @@ switch( $task ):
         $result .= '</ol>';
 
         /*
-         * Titulo del modulo
-         */
-        $result .= '<h1 class="page-header">' . ucfirst( $name ) . '</h1>';
-
-        /*
         * Boton volver
         */
         $result .= '<div class="row">';
-        $result .= ' <div class="col-md-2 col-md-offset-10 text-right">';
+        $result .= ' <div class="col-md-12 text-right">';
         $result .= '    <button class="btn btn-primary" type="button" onclick="mapperJs.list(\'' . $module . '\',\'' . $name . '\')"><i class="fa fa-arrow-left"></i> Volver</button>';
         $result .= ' </div>';
         $result .= '</div>';
@@ -47,7 +42,7 @@ switch( $task ):
         $result .= '</div>';
         $result .= '</form>';
 
-        $json = [ 'status' => 200, 'result' => $result ];
+        $json = [ 'status' => 200, 'title' => ucfirst( $name ), 'result' => $result ];
     break;
     default:
         $json = [ 'status' => 404, 'message' => 'Ocurrio un error no se recibieron todos los datos.', 'type' => 'danger' ];

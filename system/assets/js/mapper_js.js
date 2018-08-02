@@ -17,6 +17,7 @@ var mapperJs = {
 			dataType: 'json',
 			success: function (r) {
 				if ( r.status == '200' ) {
+					$('#module_title').empty().html( r.title );
 					$('#load_content').empty().html( r.result );
 					$('.pagination').empty().html( r.navigation );
 				} else {
@@ -25,6 +26,7 @@ var mapperJs = {
 						+ r.message +
 						'</div >');
 				}
+				feather.replace();
 			}
 		});
 	},
@@ -43,6 +45,7 @@ var mapperJs = {
 						+ r.message +
 						'</div >');
 				}
+				feather.replace();
 			}
 		});
 	},
@@ -72,11 +75,14 @@ var mapperJs = {
 			if ( r.status == 'success' ){
 				mapperJs.list( module, name );
 			}
+			feather.replace();
 		});
 	},
 	modal: function ( module, pk ) {
 		$('#view_modal_content').empty();
-		$('#view_modal_content').load( this.location + 'system/async/modal?module=' + module + '&pk=' + pk );
+		$('#view_modal_content').load(this.location + 'system/async/modal?module=' + module + '&pk=' + pk, function () {
+			feather.replace();
+		});
 		$('#view_modal').modal('show');
 	}
 };

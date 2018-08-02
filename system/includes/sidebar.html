@@ -1,21 +1,21 @@
 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-    <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" href="{{url}}dashboard">
-                    <span data-feather="home"></span>
-                    Dashboard
-                    <span class="sr-only">(current)</span>
-                </a>
-            </li>
-            {for: menu in menu_config }
-            <li class="nav-item">
-                <a href="javascript:;" class="module nav-link" onclick="mapperJs.list('{:menu.module}','{:menu.name}')">
-                    <span data-feather="{:menu.icon}"></span>
-                    {:menu.name}
-                </a>
-            </li>
-            {/for}
-        </ul>
-    </div>
+	<div class="sidebar-sticky">
+		<ul class="nav flex-column">
+			<li class="nav-item">
+				<a class="nav-link active" href="{{url}}dashboard">
+					<span data-feather="home"></span>
+					Dashboard
+					<span class="sr-only">(current)</span>
+				</a>
+			</li>
+			{for: menu in menu_config }
+			<li class="nav-item">
+				<a href="javascript:;" class="module nav-link" onclick="mapperJs.list('{:menu.module}','{:menu.name}')">
+					<span data-feather="{:menu.icon}"></span>
+					{:menu.name}
+				</a>
+			</li>
+			{/for}
+		</ul>
+	</div>
 </div>

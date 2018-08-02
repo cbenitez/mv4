@@ -2,6 +2,7 @@
 
 function message( $code, $description = "" ){
 	switch ( $code ):
+		case 200:
 		case 201:
 			$message = 'Los datos se guardaron con &eacute;xito.';
 			break;

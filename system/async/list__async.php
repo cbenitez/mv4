@@ -11,19 +11,6 @@ $search =  param( 'search' );
 switch( $task ):
 	case 'list':
 		/*
-		 * Miga de pan
-		 */
-		$result = '<ol class="breadcrumb">';
-		$result .= '<li><a href="' . config()['host']['app'] . 'dashboard">Dashboard</a></li>';
-		$result .= '<li class="active">' . ucfirst( $name ) . '</li>';
-		$result .= '</ol>';
-
-		/*
-		 * Titulo del modulo
-		 */
-		$result .= '<h1 class="page-header">' . ucfirst( $name ) . '</h1>';
-
-		/*
 		 * Formulario de busqueda
 		 */
 		$result .= '<form action="" method="post" enctype="text/plain" onsubmit="mapperJs.list(\''.$module.'\',\''.$name.'\');return false;">';
@@ -31,7 +18,7 @@ switch( $task ):
 		$result .= '     <div class="input-group">';
 		$result .= '         <input type="text" class="form-control" name="search" id="search" placeholder="Escriba aqui para filtrar..." value="'.$search.'">';
 		$result .= '         <div class="input-group-btn">';
-		$result .= '             <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>';
+		$result .= '             <button class="btn btn-default" type="submit"><i data-feather="search"></i></button>';
 		$result .= '         </div>';
 		$result .= '     </div>';
 		$result .= ' </div>';
@@ -39,12 +26,12 @@ switch( $task ):
 
 		/*
 		 * Boton para nuevo registro
-		 */
-		$result .= '<div class="row">';
-		$result .= ' <div class="col-md-2 col-md-offset-10 text-right">';
-		$result .= '     <button class="btn btn-success" type="button" onclick="mapperJs.action(\''.$module.'\',\''.$name.'\',\'form\',0);"><i class="fa fa-plus-circle"></i> Nuevo registro</button>';
-		$result .= ' </div>';
-		$result .= '</div>';
+		 $result .= '<div class="row">';
+		 $result .= ' <div class="col-md-12 text-right">';
+		 $result .= '     <button class="btn btn-success" type="button" onclick="mapperJs.action(\''.$module.'\',\''.$name.'\',\'form\',0);"><i class="fa fa-plus-circle"></i> Nuevo registro</button>';
+		 $result .= ' </div>';
+		 $result .= '</div>';
+		*/
 		
 		/*
 		 * Lista de registros dinamica
@@ -97,7 +84,7 @@ switch( $task ):
 				$where = '"where":"' . $where . '",';
 			endif;
 
-			$result .= '<th colspan="2">&nbsp;</th>';
+			$result .= '<th colspan="2" class="text-right"><a class="btn btn-sm btn-outline-success" role="button" onclick="mapperJs.action(\''.$module.'\',\''.$name.'\',\'form\',0);" href="javascript:;"><i data-feather="plus-circle"></i> Nuevo registro</a></th>';
 			$result .= '</tr>';
 			$result .= '</thead>';
 			$result .= '<tbody>';
@@ -127,7 +114,7 @@ switch( $task ):
 								$result .= '<td class="text-right">' . number_format( $col[ $cols[ $i ] ], 0 , '', '.' ) . '</td>';
 								break;
 							case 'checkbox':
-								$result .= '<td class="text-center"><i class="fa fa-' . ( $col[ $cols[ $i ] ] == 1 ? 'check-circle text-success' : 'minus-circle text-muted' ) . '"></i></td>';
+								$result .= '<td class="text-center"><i class="' . ( $col[ $cols[ $i ] ] == 1 ? 'text-success' : 'text-muted' ) . '" data-feather="' . ( $col[ $cols[ $i ] ] == 1 ? 'check-circle' : 'minus-circle' ) . '"></i></td>';
 								break;
 							case 'date':
 								$result .= '<td>' . date('d/m/Y', strtotime( $col[ $cols[ $i ] ] ) ) . '</td>';
@@ -157,9 +144,9 @@ switch( $task ):
 					endfor;
 					$result .= '
 					<td>
-						<a href="javascript:;" title="Abrir registro" class="btn btn-primary" onclick="mapperJs.modal(\''.$module.'\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i class="fa fa-folder-open" aria-hidden="true"></i></a>
-						<a href="javascript:;" title="Editar registro" class="btn btn-primary" onclick="mapperJs.action(\''.$module.'\',\''.$name.'\',\'form\','.$pk.');"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-						<a href="javascript:;" title="Eliminar registro" class="btn btn-danger" onclick="action(\'delete\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i class="fa fa-times" aria-hidden="true"></i></a>
+						<a href="javascript:;" title="Abrir registro" class="btn btn-outline-primary" onclick="mapperJs.modal(\''.$module.'\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i data-feather="file-text"></i></a>
+						<a href="javascript:;" title="Editar registro" class="btn btn-outline-primary" onclick="mapperJs.action(\''.$module.'\',\''.$name.'\',\'form\','.$pk.');"><i data-feather="edit"></i></a>
+						<a href="javascript:;" title="Eliminar registro" class="btn btn-outline-danger" onclick="action(\'delete\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i data-feather="delete"></i></a>
 					</td>';
 					$result .= '</tr>';
 
@@ -169,7 +156,7 @@ switch( $task ):
 
 				$navigation = $list['navigation'];
 
-				$json = [ 'status' => 200, 'result' => $result, 'navigation' => $navigation,"where" => $where  ];
+				$json = [ 'status' => 200, 'title' => ucfirst( $name ), 'result' => $result, 'navigation' => $navigation,"where" => $where  ];
 			else:
 				$json = [ 'status' => 404, 'message' => 'No se encontraron datos.', 'type' => 'warning' ];
 			endif;

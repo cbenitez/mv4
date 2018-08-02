@@ -39,7 +39,7 @@ if( is_array( $arr[ $controller->table ][ 'fields' ] ) ):
 						$table .= '<td>' . number_format( $col[ $cols[ $i ] ], 0 , '', '.' ) . '</td>';
 					break;
 					case 'checkbox':
-						$table .= '<td><i class="fa fa-' . ( $col[ $cols[ $i ] ] == 1 ? 'check-circle text-success' : 'minus-circle text-muted' ) . '"></i></td>';
+						$table .= '<td><i class="' . ( $col[ $cols[ $i ] ] == 1 ? 'text-success' : 'text-muted' ) . '" data-feather="' . ( $col[ $cols[ $i ] ] == 1 ? 'check-circle' : 'minus-circle' ) . '"></i></td>';
 					break;
 					case 'date':
 						$table .= '<td>' . date('d/m/Y', strtotime( $col[ $cols[ $i ] ] ) ) . '</td>';

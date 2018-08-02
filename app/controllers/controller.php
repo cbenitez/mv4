@@ -264,4 +264,11 @@ class Controller{
 		return $json;
 	}
 
+	public function table_prefix(){
+		$table_fields = json_decode( $this->table_fields(), true );
+		$primary_key = $table_fields[ $this->table ]['table_config']['primary_key'];
+		$prefix = explode('_', $primary_key );
+		return $prefix[0];
+	}
+
 }
