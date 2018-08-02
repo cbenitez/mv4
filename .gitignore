@@ -1,1 +1,4 @@
 test.php
+/upload/*
+.vscode
+/app/core/log/*
