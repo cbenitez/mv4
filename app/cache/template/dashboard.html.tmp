@@ -17,17 +17,18 @@
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="h2" id="module_title">Dashboard</h1>
-					<div class="btn-toolbar mb-2 mb-md-0 hide">
+					<div class="btn-toolbar mb-2 mb-md-0 hiden">
 						<div class="btn-group mr-2">
-							<button class="btn btn-sm btn-outline-secondary">Share</button>
-							<button class="btn btn-sm btn-outline-secondary">Export</button>
+							<button class="btn btn-sm btn-outline-secondary">Compartir</button>
+							<button class="btn btn-sm btn-outline-secondary">Exportar</button>
 						</div>
 						<button class="btn btn-sm btn-outline-secondary dropdown-toggle">
 							<span data-feather="calendar"></span>
-							This week
+							Esta semana
 						</button>
 					</div>
 				</div>
+
 				<!-- Load Content -->
 				<div id="load_content">
 					<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
@@ -99,46 +100,13 @@
 					</div>
 				</div><!-- End Load Content -->
 
-				<!-- Pagination -->
-				<nav aria-label="Page navigation example">
-					<ul class="pagination">
-						<li class="page-item">
-							<a class="page-link" href="#">Previous</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">1</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">2</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">3</a>
-						</li>
-						<li class="page-item">
-							<a class="page-link" href="#">Next</a>
-						</li>
-					</ul>
-				</nav>
-				<!-- End Pagination -->
+				 {% include pagination.html %}
+
 			</main>
 		</div>
 	</div>
 	
-	<div id="view_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="myModalLabel">Detalle del Registro</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				</div>
-				<div class="modal-body" id="view_modal_content">
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	{% include modal.html %}
 
 	{% include scripts.html %}
 	

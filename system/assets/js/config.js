@@ -4,6 +4,11 @@ $.blockUI.defaults.css.border = "none";
 $.blockUI.defaults.overlayCSS.opacity = 0.1;
 $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 
+/**
+ * _notify: show fixed notification
+ * @param {*} message 
+ * @param {*} type 
+ */
 function _notify( message, type ){
     var icon;
     switch( type ){
@@ -30,3 +35,11 @@ function _notify( message, type ){
         }
     });
 }
+
+/**
+ * Sidebar menu active on click
+ */
+$('.module').on('click',function(){
+    $('.nav-link').removeClass('active');
+    $(this).addClass('active');
+});
