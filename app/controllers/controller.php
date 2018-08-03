@@ -44,7 +44,13 @@ class Controller{
 		$obj = new Model;
 		
 		$obj->table = $this->table;
-		
+
+		$this->list_fields = $this->table_fields();
+
+		$arr = json_decode( $this->list_fields, true );
+
+		$obj->primary_key = $arr[$this->table]['table_config']['primary_key'];
+
 		$result = $obj->action_delete( $pk );
 		
 		return $result;
@@ -181,6 +187,23 @@ class Controller{
 		endif;
 	}
 
+	public function delete_image( $pk ){
+
+		$this->list_fields = $this->table_fields();
+
+		$arr = json_decode( $this->list_fields, true );
+
+		$prefix = str_replace( '_id', '', $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] );
+
+		if( !array_key_exists( $prefix . '_file_name', $arr[ $this->table ][ 'fields' ] ) ) :
+			return;
+		endif;
+
+		$list = json_decode( $this->list( '{"where":" ' . $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . $pk . '"}' ), true );
+
+		return $list;
+	}
+
 	public function form_construct( $pk = 0 ){
 
 		$this->list_fields = $this->table_fields();
@@ -267,8 +290,8 @@ class Controller{
 	public function table_prefix(){
 		$table_fields = json_decode( $this->table_fields(), true );
 		$primary_key = $table_fields[ $this->table ]['table_config']['primary_key'];
-		$prefix = explode('_', $primary_key );
-		return $prefix[0];
+		$prefix = str_replace( '_id', '', $primary_key );
+		return $prefix;
 	}
 
 }

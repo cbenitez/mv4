@@ -6,6 +6,9 @@ function message( $code, $description = "" ){
 		case 201:
 			$message = 'Los datos se guardaron con &eacute;xito.';
 			break;
+		case 400:
+			$message = 'La solicitud es incorrecta.';
+			break;
 		case 401:
 			$message = 'No tiene permisos para esta acci&oacute;n.';
 			break;

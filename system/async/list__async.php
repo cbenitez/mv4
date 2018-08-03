@@ -88,7 +88,6 @@ switch( $task ):
 			$result .= '</tr>';
 			$result .= '</thead>';
 			$result .= '<tbody>';
-
 			if( $page > 0 ):
 				
 				$page = '"page":'.$page . ',';
@@ -103,7 +102,7 @@ switch( $task ):
 
 			$params = '{ ' . $page . ' ' . $limit . ' ' . $where . ' "order" : "' . $arr[ $controller->table ] ['table_config'] ['primary_key']  . ' desc" }';
 			$list =  $controller->pagination( $params );
-			if( haveRows( $list ) ):
+			if( haveRows( $list['list'] ) ):
 				foreach( $list['list'] as $col ):
 					$pk = $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ];
 					$result .= '<tr>';
@@ -146,7 +145,7 @@ switch( $task ):
 					<td>
 						<a href="javascript:;" title="Abrir registro" class="btn btn-outline-primary" onclick="mapperJs.modal(\''.$module.'\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i data-feather="file-text"></i></a>
 						<a href="javascript:;" title="Editar registro" class="btn btn-outline-primary" onclick="mapperJs.action(\''.$module.'\',\''.$name.'\',\'form\','.$pk.');"><i data-feather="edit"></i></a>
-						<a href="javascript:;" title="Eliminar registro" class="btn btn-outline-danger" onclick="action(\'delete\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i data-feather="delete"></i></a>
+						<a href="javascript:;" title="Eliminar registro" class="btn btn-outline-danger" onclick="mapperJs.action(\''.$module.'\',\''.$name.'\',\'delete\',' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . ');"><i data-feather="delete"></i></a>
 					</td>';
 					$result .= '</tr>';
 
@@ -158,7 +157,9 @@ switch( $task ):
 
 				$json = [ 'status' => 200, 'title' => ucfirst( $name ), 'result' => $result, 'navigation' => $navigation,"where" => $where  ];
 			else:
-				$json = [ 'status' => 404, 'message' => 'No se encontraron datos.', 'type' => 'warning' ];
+				$result .= '</tbody>';
+				$result .= '</table>';
+				$json = [ 'status' => 404, 'message' => 'No se encontraron datos.', 'type' => 'warning', 'title' => ucfirst( $name ), 'result' => $result ];
 			endif;
 		else:
 			$json = [ 'status' => 404, 'message' => 'Datos no encontrados.', 'type' => 'warning' ];

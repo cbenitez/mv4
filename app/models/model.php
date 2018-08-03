@@ -25,11 +25,10 @@ class Model extends Database {
 		return ['code' => 200, 'description'=> $result];
 	}
 
-	public function action_delete( $data ){
-		$data = json_decode( $data, true );
-		$d = $this->delete( $this->table, "`".$this->primary_key."` = {$data[$this->primary_key]}" );
-		Logger::log( "DELETE: {$d}" );
-		$result =  $d ? 200 : 404;
+	public function action_delete( $pk ){
+		$d = $this->delete( $this->table, "{$this->primary_key} = {$pk}" );
+		Logger::log( "DELETE: ".$this->table. " {$this->primary_key} = {$pk}" );
+		$result['code'] =  $d ? 200 : 400;
 		return $result;
 	}
 

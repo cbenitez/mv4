@@ -21,7 +21,7 @@ var mapperJs = {
 					$('#load_content').empty().html( r.result );
 					$('.pagination').empty().html( r.navigation );
 				} else {
-					$('#load_content').empty().html(
+					$('#load_content').empty().html(r.result +
 						'<div class="alert alert-' + r.type + '" role="alert">'
 						+ r.message +
 						'</div >');
@@ -37,8 +37,14 @@ var mapperJs = {
 			type: 'POST',
 			dataType: 'json',
 			success: function (r) {
-				if ( r.status == '200' ) {
-					$('#load_content').empty().html( r.result );
+				if ( r.status == 'success' ) {
+					if ( typeof r.load !== 'undefined' ){
+						_notify( r.message, r.type );
+						mapperJs.list( r.load.module, r.load.name );
+					}else{
+						$('#module_title').empty().html( r.title );
+						$('#load_content').empty().html( r.result );
+					}
 				} else {
 					$('#load_content').empty().html(
 						'<div class="alert alert-' + r.type + '" role="alert">'
