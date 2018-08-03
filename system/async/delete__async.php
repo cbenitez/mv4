@@ -9,11 +9,11 @@ $pk = numParam( 'pk' );
 
 $controller = new Controller( $module );
 
-$r = $controller->delete( $pk )
-				->delete_image( $pk );
+$r = $controller->delete( $pk );
+$d = $controller->delete_image( $pk );
 
 if( $r['code'] == 200 ):
-	$json = [ 'status' => 'success', 'code' => $r['code'], 'message' => message( $r['code'], 'El registro se ha eliminado' ), 'type' => 'success', 'load' => [ 'module' => $module, 'name' => $name ],$r ]; 
+	$json = [ 'status' => 'success', 'code' => $r['code'], 'message' => message( $r['code'], 'El registro se ha eliminado' ), 'type' => 'success', 'load' => [ 'module' => $module, 'name' => $name ],$r,$d ]; 
 else:
 	$json = [ 'status' => 'error', 'code' => $r['code'], 'message' => message( $r['code'], $r['description'] ), 'type' => 'warning' ];
 endif;
