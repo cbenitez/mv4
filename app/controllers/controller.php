@@ -199,9 +199,11 @@ class Controller{
 			return;
 		endif;
 
-		$list = json_decode( $this->list( '{"where":" ' . $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . $pk . '"}' ), true );
+		$params = '{"where":"' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . '=' . $pk . '"}';
+		$list = json_decode( $this->list( $params ), true );
 
-		return $list;
+		@unlink( $list[0][ $prefix . '_big_path' ] );
+		@unlink( $list[0][ $prefix . '_small_path' ] );
 	}
 
 	public function form_construct( $pk = 0 ){

@@ -27,7 +27,7 @@ class Model extends Database {
 
 	public function action_delete( $pk ){
 		$d = $this->delete( $this->table, "{$this->primary_key} = {$pk}" );
-		Logger::log( "DELETE: ".$this->table. " {$this->primary_key} = {$pk}" );
+		Logger::log( "DELETE: ".$this->table. " {$this->primary_key} = {$pk}  \n\r" );
 		$result['code'] =  $d ? 200 : 400;
 		return $result;
 	}
