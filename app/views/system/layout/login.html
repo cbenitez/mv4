@@ -3,27 +3,57 @@
 <!-- Make sure the <html> tag is set to the .full CSS class. Change the background image in the full.css file. -->
 
 <head>
-    {% include head.html %}
-    <link href="{{assets}}css/signin.css" rel="stylesheet">
+	{% include head.html %}
+	<link href="{{assets}}css/signin.css" rel="stylesheet">
 </head>
 
 <body>
 
-    <div class="container">
+	<div class="container">
 
-        <form class="form-signin">
-            <h2 class="form-signin-heading">Iniciar sesi&oacute;n</h2>
-            <label for="input_user" class="sr-only">Usuario</label>
-            <input type="email" id="input_user" name="input_user" class="form-control" placeholder="Email" required autofocus>
-            <label for="input_password" class="sr-only">Contrase&ntilde;a</label>
-            <input type="password" id="input_password" name="input_password" class="form-control" placeholder="Contrase&ntilde;a" required>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-        </form>
+		<form class="form-signin" action="" method="post" enctype="text/plain">
+			<div class="text-center mb-4">
+				
+				<h1 class="h3 mb-3 font-weight-normal"><i data-feather="user"></i> Iniciar sesi&oacute;n</h1>
+			</div>
+			<div class="form-label-group">
+				<label for="input_user" class="sr-only">Usuario</label>
+				<input type="email" id="input_user" name="input_user" class="form-control" placeholder="Email" required autofocus>
+			</div>
+			<div class="form-label-group">
+				<label for="input_password" class="sr-only">Contrase&ntilde;a</label>
+				<input type="password" id="input_password" name="input_password" class="form-control" placeholder="Contrase&ntilde;a" required>
+			</div>
+			<span id="error-message"></span>
+			<button class="btn btn-lg btn-outline-primary btn-block" type="submit">Entrar</button>
+			<input type="hidden" id="input_token" name="input_token" value="{{token}}">
+		</form>
 
-    </div> <!-- /container -->
+	</div> <!-- /container -->
 
-    {% include script.html %}
+	{% include scripts.html %}
 
+	<script>
+		feather.replace({ class: 'feather-28x' });
+		$(document).ready(function(){
+			$('.form-signin').on('submit',function(){
+				$.ajax({
+					url:'system/async/login',
+					dataType:'json',
+					type:'post',
+					data: $(this).serialize(),
+					success:function( r ){
+						if( r.status == 'success' ){
+							location.href = 'dashboard';
+						}else{
+							$('#error-message').html( '<div class="alert alert-danger" role="alert">' + r.message + '</div>');
+						}
+					}
+				});
+				return false;
+			});
+		});
+	</script>
 </body>
 
 </html>

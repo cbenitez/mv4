@@ -19,7 +19,8 @@ class Login extends Tova
         $this->assign([
             'project_name'  => $project_name,
             'title_site'    => $title_site,
-            'assets'        => $assets
+            'assets'        => $assets,
+            'token'         => token('login_adm')
         ]);
 
         $this->render();

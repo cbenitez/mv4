@@ -16,7 +16,7 @@ if( is_array( $arr[ $controller->table ][ 'fields' ] ) ):
 		$labels[]   = $field['label'];
 		$cols[]     = $fields;
 		$type[]     = $field['type'];
-		$visible[]  = $field['visible'];
+		$visible[]  = !isset( $field['visible'] ) ? true : $field['visible'];
 	endforeach;
 
 	$table .= '<tbody>';
@@ -24,7 +24,7 @@ if( is_array( $arr[ $controller->table ][ 'fields' ] ) ):
 	foreach( $list as $col ):
 		$table .= '<tr><td><strong>#</strong></td><td>' . $col[ $arr[ $controller->table ][ 'table_config' ][ 'primary_key' ] ] . '</td></tr>';
 		for( $i = 0; $i < count( $cols ); $i++ ):
-			if( $visible[ $i ] != 'false' ):
+			if( $visible[ $i ] != false ):
 				
 				$table .= '<tr>';
 				

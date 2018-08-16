@@ -4,35 +4,35 @@ class Controller{
 	protected $list_fields 	= '';
 	private $page_number 	= 1;
 	private $config;
+	private $model;
 
 	function __construct( $table ){
 		$this->table 	= $table;
-		$this->config 	= config();
+		$this->config	= config();
+		$this->model	= new Model;
 	}
 
 	public function save( $data ){
 
-		$obj = new Model;
-
-		$obj->table = $this->table;
+		$this->model->table = $this->table;
 
 		$this->list_fields = $this->table_fields();
 
 		$arr = json_decode( $this->list_fields, true );
 
-		$exist = json_decode( $obj->action_select( '{"where":" ' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . number( $data[ $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] ] ) . '"}' ), true );
+		$exist = json_decode( $this->model->action_select( '{"where":" ' . $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] . ' = ' . number( $data[ $arr[ $this->table ][ 'table_config' ][ 'primary_key' ] ] ) . '"}' ), true );
 
 		if( count( $exist ) == 0 ):
 
 			unset( $data[ $arr[$this->table]['table_config']['primary_key'] ] );
 
-			$result = $obj->action_create( json_encode( $data ) );
+			$result = $this->model->action_create( json_encode( $data ) );
 
 		else:
 
-			$obj->primary_key = $arr[$this->table]['table_config']['primary_key'];
+			$this->model->primary_key = $arr[$this->table]['table_config']['primary_key'];
 
-			$result = $obj->action_update( json_encode( $data ) );
+			$result = $this->model->action_update( json_encode( $data ) );
 
 		endif;
 
@@ -40,29 +40,25 @@ class Controller{
 	}
 
 	public function delete( $pk ){
-		
-		$obj = new Model;
-		
-		$obj->table = $this->table;
+
+		$this->model->table = $this->table;
 
 		$this->list_fields = $this->table_fields();
 
 		$arr = json_decode( $this->list_fields, true );
 
-		$obj->primary_key = $arr[$this->table]['table_config']['primary_key'];
+		$this->model->primary_key = $arr[$this->table]['table_config']['primary_key'];
 
-		$result = $obj->action_delete( $pk );
+		$result = $this->model->action_delete( $pk );
 		
 		return $result;
 	}
 
 	public function list( $params = "" ){
+
+		$this->model->table = $this->table;
 		
-		$obj = new Model;
-		
-		$obj->table = $this->table;
-		
-		$list = $obj->action_select( $params );
+		$list = $this->model->action_select( $params );
 		
 		return $list;
 	}
@@ -71,9 +67,7 @@ class Controller{
 
 		extract( json_decode( $params, true ), EXTR_OVERWRITE );
 
-		$obj = new Model;
-		
-		$obj->table = $this->table;
+		$this->model->table = $this->table;
 		
 		if( is_numeric ( $limit ) ):
 
@@ -105,7 +99,7 @@ class Controller{
 
 		$params = '{' . $where . $order . $limiting . '}';
 
-		$list = $obj->action_select( $params );
+		$list = $this->model->action_select( $params );
 
 		$result['list'] = json_decode( $list, true );
 		
@@ -278,6 +272,7 @@ class Controller{
 	}
 
 	public function table_fields(){
+
 		$json = false;
 		
 		if( file_exists( config()['route']['tables'] . slugit( $this->table ) . '.json' ) ):
@@ -290,9 +285,13 @@ class Controller{
 	}
 
 	public function table_prefix(){
+
 		$table_fields = json_decode( $this->table_fields(), true );
+
 		$primary_key = $table_fields[ $this->table ]['table_config']['primary_key'];
+
 		$prefix = str_replace( '_id', '', $primary_key );
+
 		return $prefix;
 	}
 

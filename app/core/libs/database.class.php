@@ -102,5 +102,20 @@ class Database extends PDO
 	public function delete( $table, $where, $limit = 1 ){
 		return $this->exec("DELETE FROM $table WHERE $where LIMIT $limit");
 	}
+
+	public function find( $table, $field, $value, $options="" ){
+		
+		if(strlen($options) > 0):
+			$opt = "AND {$options}";
+		else:
+			$opt = "";
+		endif;
+		
+		$sql = "SELECT * FROM {$table} WHERE {$field} = '{$value}' ".$opt;
+		$obj = new self();
+		$sth = $obj->prepare($sql);
+		$sth->execute();
+		return $sth->fetchAll();
+	}
 	
 }

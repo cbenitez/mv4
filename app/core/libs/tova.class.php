@@ -9,7 +9,7 @@ class Tova
 
     var $cache_file_ext = ".tmp";
 
-    var $template_caching = true;
+    var $template_caching; 
 
     var $template_cache_file = false;
 
@@ -22,7 +22,7 @@ class Tova
     var $params = [];
 
     function __construct(){
-        
+        $this->template_caching = config()['cache']['template'];
     }
 
     public function template( $resource ){

@@ -1,1 +1,1 @@
-[{"icon":"image","name":"Fotos","module":"fotos_personas"},{"icon":"user","name":"Personas","module":"personas"}]
+[{"icon":"users","name":"Administradores","login":true,"module":"admins"},{"icon":"image","name":"Fotos","module":"fotos_personas"},{"icon":"user","name":"Personas","module":"personas"}]

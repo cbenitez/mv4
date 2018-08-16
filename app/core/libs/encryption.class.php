@@ -4,7 +4,7 @@ class Encryption{
 	
 	public static function Encrypt($value){
 
-		$key = config()['authToken'];
+		$key = config()['authen']['authToken'];
 
 		$encType = MCRYPT_RIJNDAEL_256;
 		$encMode = MCRYPT_MODE_ECB;
@@ -16,7 +16,7 @@ class Encryption{
 
 	public static function Decrypt($value){
 
-		$key = config()['authToken'];
+		$key = config()['authen']['authToken'];
 
 		$value	 = base64_decode( strtr( $value, '-_', '+/') . str_repeat('=', 3 - ( 3 + strlen( $value ) ) % 4 ) ); 
 		$value	 = strrev($value);
